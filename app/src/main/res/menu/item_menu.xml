@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home_2"/>
+
+    <item android:id="@+id/nav_cart"
+        android:title="@string/cart"
+        android:icon="@drawable/ic_cart_1"/>
+
+    <item android:id="@+id/nav_heart"
+        android:title="@string/favourite"
+        android:icon="@drawable/ic_heart"/>
+
+    <item android:id="@+id/nav_promotion"
+        android:title="@string/promotion"
+        android:icon="@drawable/ic_promotion"/>
+
+    <item android:id="@+id/nav_chat"
+        android:title="@string/message"
+        android:icon="@drawable/ic_chatting_3"/>
+
+    <item android:id="@+id/nav_purchase"
+        android:title="@string/purchase"
+        android:icon="@drawable/ic_date"/>
+
+    <item android:id="@+id/nav_statics"
+        android:title="@string/statics"
+        android:icon="@drawable/ic_stats_2"/>
+
+    <item
+        android:id="@+id/nav_help"
+        android:title="@string/support"
+        android:icon="@drawable/ic_help"/>
+
+
+    <item android:id="@+id/nav_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_circle_user"/>
+
+    <item android:id="@+id/nav_setting"
+        android:title="Setting"
+        android:icon="@drawable/ic_setting_2"/>
+
+    <item android:id="@+id/nav_logout"
+        android:title="Log out"
+        android:icon="@drawable/ic_arrow_transfer_2"/>
+</menu>
