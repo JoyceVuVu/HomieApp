@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         productCatRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         FirebaseRecyclerOptions<ProductCategory> options =
                 new FirebaseRecyclerOptions.Builder<ProductCategory>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("categories"), ProductCategory.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference("categories"), ProductCategory.class)
                         .build();
         categoryAdapter = new CategoryAdapter(options,this);
         productCatRecycler.setAdapter(categoryAdapter);

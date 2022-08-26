@@ -61,9 +61,9 @@ public class VerifyPhoneNo extends AppCompatActivity {
         //get all the data from Intent
         WhatToDo = getIntent().getStringExtra("WhatToDo");
         phone_no = getIntent().getStringExtra("phone_no");
-        if (phone_no.charAt(0) == '0') {
-            phone_no = phone_no.substring(1);
-        }
+//        if (phone_no.charAt(0) == '0') {
+//            phone_no = phone_no.substring(1);
+//        }
         full_name = getIntent().getStringExtra("full_name");
         username = getIntent().getStringExtra("username");
         email = getIntent().getStringExtra("email");
@@ -160,17 +160,12 @@ public class VerifyPhoneNo extends AppCompatActivity {
     private void storeNewUserData() {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         DatabaseReference reference = rootNode.getReference("users");
-
+        boolean isAdmin;
+        isAdmin = email.contains("@admin.com");
         phone_no = phone_no;
-        User user = new User(full_name,username,email,phone_no,password,address);
+        User user = new User(full_name,username,email,phone_no,password,address, isAdmin);
 
-        if(email.contains("@admin.com")){
-            reference.child("admins").child(phone_no).setValue(user);
-        }else {
-            reference.child("customers").child(phone_no).setValue(user);
-        }
-
-//        reference.child(phone_no).setValue(user);
+        reference.child(phone_no).setValue(user);
 
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         finish();

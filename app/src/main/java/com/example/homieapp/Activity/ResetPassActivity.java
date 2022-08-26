@@ -68,7 +68,7 @@ public class ResetPassActivity extends AppCompatActivity {
         }
 
         //Check validate phone_no
-        String PhoneNo = phone_no.getEditText().getText().toString().trim();
+        String PhoneNo = phone_no.getEditText().getText().toString().trim().substring(1);
         if (PhoneNo.isEmpty()){
             phone_no.setError("Please enter your phone number!");
             phone_no.requestFocus();

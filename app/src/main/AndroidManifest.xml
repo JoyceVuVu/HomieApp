@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light.NoActionBar">
         <activity
+            android:name=".Activity.AdminManagement"
+            android:exported="false" />
+        <activity
             android:name=".Activity.AddCategoryActivity"
             android:exported="false" />
         <activity
@@ -31,6 +34,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.EditCategory" />
+        <activity android:name=".Activity.DashboardProduct" />
+        <activity android:name=".Activity.EditDiscount" />
+        <activity android:name=".Activity.EditProduct" />
+        <activity android:name=".Activity.CategoryDetail" />
+        <activity android:name=".Activity.ProfileActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.VerifyPhoneNo" />

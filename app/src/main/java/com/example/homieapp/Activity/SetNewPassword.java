@@ -27,7 +27,6 @@ public class SetNewPassword extends AppCompatActivity {
     Button confirm_btn;
     ProgressBar progressBar;
     Animation animation;
-    String Password, Confirm_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +59,15 @@ public class SetNewPassword extends AppCompatActivity {
             showCustomDialog();
         }
 
-        Password = in_password.getEditText().getText().toString().trim();
-        Confirm_password = in_confirm_password.getEditText().getText().toString().trim();
+        String Password = in_password.getEditText().getText().toString().trim();
+        String Confirm_password = in_confirm_password.getEditText().getText().toString().trim();
 
         //check validate Password
         String passwordVal = "^"+
                 "(?=.*[a-z])" +         //at least 1 lower case letter
                 "(?=.*[A-Z])" +         //at least 1 upper case letter
                 "(?=.*[a-zA-Z])" +      //any letter
-                "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                "(?=.*[@#$%^&+=*])" +    //at least 1 special character
                 "(?=\\S+$)" +           //no white spaces
                 ".{4,}" +               //at least 4 characters
                 "$";
@@ -103,7 +102,7 @@ public class SetNewPassword extends AppCompatActivity {
 
         //Update Data in Firebase and in Sessions
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        reference.child(PhoneNo).child("password").setValue(in_password);
+        reference.child(PhoneNo).child("password").setValue(Password);
         startActivity(new Intent(getApplicationContext(), ForgetPasswordSuccessMessage.class));
         finish();
 

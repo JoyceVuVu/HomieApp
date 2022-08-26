@@ -9,8 +9,8 @@ public class User {
     String phone_no;
     String pass;
     String address;
-    String gender;
     String ava;
+    boolean isAdmin;
 
     public User() {
     }
@@ -23,20 +23,36 @@ public class User {
         this.pass = password;
         this.address = address;
     }
-
-    public User( String full_name, String username, String email, String phone_no, String pass, String address, String gender, String ava) {
+    public User(String full_name, String username, String email, String phone_no, String pass, String address, boolean isAdmin) {
         this.full_name = full_name;
         this.username = username;
         this.email = email;
         this.phone_no = phone_no;
         this.pass = pass;
         this.address = address;
-        this.gender = gender;
-        this.ava = ava;
+        this.isAdmin = isAdmin;
     }
 
+    public User(String full_name, String username, String email, String phone_no, String pass, String address, String ava, boolean isAdmin) {
+        this.full_name = full_name;
+        this.username = username;
+        this.email = email;
+        this.phone_no = phone_no;
+        this.pass = pass;
+        this.address = address;
+        this.ava = ava;
+        this.isAdmin = isAdmin;
+    }
 
-    public User(String username,String email) {
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public User(String username, String email) {
         this.username = username;
         this.email = email;
     }
@@ -87,14 +103,6 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getAva() {
