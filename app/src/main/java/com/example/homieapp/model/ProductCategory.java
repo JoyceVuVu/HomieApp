@@ -3,40 +3,38 @@ package com.example.homieapp.model;
 import java.util.Map;
 
 public class ProductCategory{
-     String procateName;
-     String procateId;
-    String procateUrl;
+    private String id;
+    private String name;
+    private  String image;
+    public ProductCategory(){}
 
-    public ProductCategory() {
+    public ProductCategory(String id, String name, String image) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
     }
 
-    public ProductCategory(String procateId, String procateName, String procateUrl) {
-        this.procateId = procateId;
-        this.procateName = procateName;
-        this.procateUrl = procateUrl;
+    public String getId() {
+        return id;
     }
 
-    public String getProcateId() {
-        return procateId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setProcateId(String procateId) {
-        this.procateId = procateId;
+    public String getName() {
+        return name;
     }
 
-    public  String getProcateName() {
-        return procateName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setProcateName(String procateName) {
-        this.procateName = procateName;
+    public String getImage() {
+        return image;
     }
 
-    public  String getProcateUrl() {
-        return procateUrl;
-    }
-
-    public void setProcateUrl(String procateUrl) {
-        this.procateUrl = procateUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

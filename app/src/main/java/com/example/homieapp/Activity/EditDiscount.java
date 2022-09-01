@@ -142,11 +142,11 @@ public class EditDiscount extends AppCompatActivity {
     }
     private void saveDate(String id,String name, String percent,String description, String url){
         HashMap<String, Object> productMap = new HashMap<>();
-        productMap.put("ID", id);
-        productMap.put("Name", name);
-        productMap.put("Percent", percent);
-        productMap.put("Description", description);
-        productMap.put("Image", url);
+        productMap.put("id", id);
+        productMap.put("name", name);
+        productMap.put("percent", percent);
+        productMap.put("description", description);
+        productMap.put("image", url);
         reference.child(id).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -169,10 +169,10 @@ public class EditDiscount extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 edit_discount_id.getEditText().setText(id);
                 edit_discount_id.setEnabled(false);
-                edit_discount_name.getEditText().setText(snapshot.child("Name").getValue(String.class));
-                edit_discount_percent.getEditText().setText(snapshot.child("Percent").getValue(String.class));
-                edit_discount_description.getEditText().setText(snapshot.child("Description").getValue(String.class));
-                defaultImageUrl = snapshot.child("Image").getValue(String.class);
+                edit_discount_name.getEditText().setText(snapshot.child("name").getValue(String.class));
+                edit_discount_percent.getEditText().setText(snapshot.child("percent").getValue(String.class));
+                edit_discount_description.getEditText().setText(snapshot.child("description").getValue(String.class));
+                defaultImageUrl = snapshot.child("image").getValue(String.class);
                 Glide.with(getApplicationContext()).load(defaultImageUrl).into(edit_discount_img);
             }
 

@@ -1,203 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e1e1e1">
+    android:orientation="vertical"
+    android:background="@color/background_gray">
 
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
                 <ImageView
-                    android:id="@+id/back"
+                    android:id="@+id/cart_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="64dp"
-                    app:srcCompat="@drawable/back" />
-
+                    android:src="@drawable/back"/>
                 <TextView
-                    android:id="@+id/mycart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="54dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="My Cart"
-                    android:textColor="@color/black"
+                    android:text="Your cart"
                     android:textSize="32sp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/purple_500"
+                    />
 
-                <ImageView
-                    android:id="@+id/edit"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginTop="54dp"
-                    android:layout_marginEnd="32dp"
-                    android:src="@drawable/ava1" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/view"
-                android:layout_width="386dp"
-                android:layout_height="380dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="1dp"
-                tools:listitem="@layout/cart_row_item">
+                android:id="@+id/cart_item_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/emty_txt"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/montserrat"
-                android:text="Your cart is emty"
-                android:textColor="@color/purple_500"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="360dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/cart_details_bgr">
+                android:background="@drawable/cart_details_bgr"
+                android:orientation="vertical"
+                android:layout_margin="16dp"
+                android:padding="18dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Items Total"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/totalPrice_txt"
+                    android:id="@+id/cart_totalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:fontFamily="@font/montserrat"
                     android:text="0 Vnd"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+                    android:textSize="16sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Delivery Service"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="@+id/textView12"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/delivery_txt"
+                    android:id="@+id/cart_delivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
                     android:text="0 Vnd"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
-                    app:layout_constraintEnd_toEndOf="@+id/totalPrice_txt"
-                    app:layout_constraintTop_toTopOf="@+id/textView14" />
-
+                    android:textSize="16sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                 <TextView
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="Tax"
+                    android:text="Discount"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="@+id/textView14"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                    android:textSize="16sp"
+                    android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/tax_txt"
+                    android:id="@+id/cart_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
                     android:text="0 Vnd"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                    app:layout_constraintEnd_toEndOf="@+id/delivery_txt" />
+                    android:textSize="16sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Total"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView16"
-                    app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                    android:layout_weight="1"/>
 
                 <TextView
-                    android:id="@+id/total_txt"
+                    android:id="@+id/cart_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
                     android:text="0 Vnd"
                     android:textColor="@color/black"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView18"
-                    app:layout_constraintEnd_toEndOf="@+id/tax_txt" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_checkout"
                 android:layout_width="270dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="32dp"
-                android:background="@color/purple_500"
+                android:backgroundTint="@color/purple_500"
                 android:fontFamily="@font/montserrat"
                 android:text="Check out"
-                android:textAlignment="center"
+                android:textColor="@color/white"
                 android:textSize="26sp" />
 
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

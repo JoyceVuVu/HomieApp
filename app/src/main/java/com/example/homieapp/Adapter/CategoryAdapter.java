@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homieapp.Activity.CategoryDetail;
+import com.example.homieapp.Activity.DashboardProduct;
+import com.example.homieapp.Activity.ProductsDetails;
 import com.example.homieapp.R;
 import com.example.homieapp.model.ProductCategory;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.squareup.picasso.Picasso;
 
 public class CategoryAdapter extends FirebaseRecyclerAdapter<ProductCategory, CategoryAdapter.ViewHolder> {
     /**
@@ -33,12 +36,12 @@ public class CategoryAdapter extends FirebaseRecyclerAdapter<ProductCategory, Ca
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull ProductCategory model) {
-        holder.cate_name.setText(model.getProcateName());
-        Glide.with(context).load(model.getProcateUrl()).into(holder.cate_pic);
+        holder.cate_name.setText(model.getName());
+        Picasso.with(holder.cate_pic.getContext()).load(model.getImage()).fit().centerCrop().into(holder.cate_pic);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = model.getProcateId();
+                String id = model.getId();
                 Intent intent = new Intent(holder.itemView.getContext(), CategoryDetail.class);
                 intent.putExtra("ID", id);
                 context.startActivity(intent);

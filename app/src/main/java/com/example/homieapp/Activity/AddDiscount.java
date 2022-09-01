@@ -117,11 +117,11 @@ public class AddDiscount extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"got the discount image url successfully ...", Toast.LENGTH_SHORT).show();
 
                                         HashMap<String, Object> discountMap = new HashMap<>();
-                                        discountMap.put("ID", id);
-                                        discountMap.put("Name", name);
-                                        discountMap.put("Image", downloadImageUrl);
-                                        discountMap.put("Percent", percent);
-                                        discountMap.put("Description", description);
+                                        discountMap.put("id", id);
+                                        discountMap.put("name", name);
+                                        discountMap.put("image", downloadImageUrl);
+                                        discountMap.put("percent", percent);
+                                        discountMap.put("description", description);
 
                                         discount_reference.child(id).updateChildren(discountMap).
                                                 addOnCompleteListener(new OnCompleteListener<Void>() {

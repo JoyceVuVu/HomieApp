@@ -4,51 +4,95 @@ import java.io.Serializable;
 
 public class Products implements Serializable {
 
-      String productId;
-      String productName;
-      String productQty;
-      String procateId;
-      String productPrice;
-      String imageUrl;
-      String description;
-      String feedback;
-      String[] offers;
-      String discount;
-    boolean favourite;
-    int numberInCart;
+     private String id;
+     private String name;
+     private String quantity;
+     private String category;
+     private String price;
+     private String image;
+     private String description;
+     private String discount;
+     private String numberInCart;
 
     public Products() {
     }
-
-    public Products(String productId, String productName, String productQty, String procateId, String productPrice, String imageUrl, String description, String feedback, String[] offers, String discount, boolean favourite, int numberInCart) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productQty = productQty;
-        this.procateId = procateId;
-        this.productPrice = productPrice;
-        this.imageUrl = imageUrl;
+    public Products(String id, String name, String quantity, String category, String price, String image, String description, String discount) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.category = category;
+        this.price = price;
+        this.image = image;
         this.description = description;
-        this.feedback = feedback;
-        this.offers = offers;
         this.discount = discount;
-        this.favourite = favourite;
+    }
+
+    public Products(String id, String name, String quantity, String category, String price, String image, String description, String discount, String numberInCart) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.category = category;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+        this.discount = discount;
         this.numberInCart = numberInCart;
     }
 
-    public String getDiscount() {
-        return discount;
+    public String getNumberInCart() {
+        return numberInCart;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setNumberInCart(String numberInCart) {
+        this.numberInCart = numberInCart;
     }
 
-    public String getProcateId() {
-        return procateId;
+    public String getId() {
+        return id;
     }
 
-    public void setProcateId(String procateId) {
-        this.procateId = procateId;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {
@@ -59,76 +103,11 @@ public class Products implements Serializable {
         this.description = description;
     }
 
-    public int getNumberInCart() {
-        return numberInCart;
+    public String getDiscount() {
+        return discount;
     }
 
-    public void setNumberInCart(int numberInCart) {
-        this.numberInCart = numberInCart;
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
-
-    public String[] getOffers() {
-        return offers;
-    }
-
-    public void setOffers(String[] offers) {
-        this.offers = offers;
-    }
-
-    public boolean isFavourite() {
-        return favourite;
-    }
-
-    public void setFavourite(boolean favourite) {
-        this.favourite = favourite;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductQty() {
-        return productQty;
-    }
-
-    public void setProductQty(String productQty) {
-        this.productQty = productQty;
-    }
-
-    public String  getProductPrice() {
-        return productPrice;
-    }
-
-    public void setProductPrice(String productPrice) {
-        this.productPrice = productPrice;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
 }

@@ -18,7 +18,7 @@
         android:icon="@drawable/ic_promotion"/>
 
     <item android:id="@+id/nav_chat"
-        android:title="@string/message"
+        android:title="@string/admin_management"
         android:icon="@drawable/ic_chatting_3"/>
 
     <item android:id="@+id/nav_purchase"

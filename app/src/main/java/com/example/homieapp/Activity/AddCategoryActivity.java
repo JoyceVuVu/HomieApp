@@ -81,8 +81,14 @@ public class AddCategoryActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, GalleryPick);
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null){
+            uri = data.getData();
+            in_cate_img.setImageURI(uri);
+        }
+    }
 
     private void addCategory() {
         if (!validateID() | !validateName() |!validateImage()){
@@ -129,9 +135,9 @@ public class AddCategoryActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"got the category image url successfully ...", Toast.LENGTH_SHORT).show();
 
                                         HashMap<String, Object> categoryMap = new HashMap<>();
-                                        categoryMap.put("ID", id);
-                                        categoryMap.put("Name", name);
-                                        categoryMap.put("Image", downloadImageUrl);
+                                        categoryMap.put("id", id);
+                                        categoryMap.put("name", name);
+                                        categoryMap.put("image", downloadImageUrl);
                                         cate_reference.child(id).updateChildren(categoryMap).
                                                 addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override

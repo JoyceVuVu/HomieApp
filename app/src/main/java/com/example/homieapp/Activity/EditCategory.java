@@ -144,9 +144,9 @@ public class EditCategory extends AppCompatActivity {
     }
     private void saveDate(String id,String name, String url){
         HashMap<String, Object> productMap = new HashMap<>();
-        productMap.put("ID", id);
-        productMap.put("Name", name);
-        productMap.put("Image", url);
+        productMap.put("id", id);
+        productMap.put("name", name);
+        productMap.put("image", url);
         reference.child(id).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -169,8 +169,8 @@ public class EditCategory extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 edit_cate_id.setText(id);
                 edit_cate_id.setEnabled(false);
-                edit_cate_name.setText(snapshot.child("Name").getValue(String.class));
-                defaultImageUrl = snapshot.child("Image").getValue(String.class);
+                edit_cate_name.setText(snapshot.child("name").getValue(String.class));
+                defaultImageUrl = snapshot.child("image").getValue(String.class);
                 Glide.with(getApplicationContext()).load(defaultImageUrl).into(edit_cate_img);
             }
 

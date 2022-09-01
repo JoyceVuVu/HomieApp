@@ -2,6 +2,7 @@ package com.example.homieapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -23,15 +24,22 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthSettings;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneNo extends AppCompatActivity {
+    String phoneNum = "+16505554567";
+    String testVerificationCode = "123456";
 
     TextInputLayout enter_otp;
     Button verify_btn;
@@ -40,6 +48,7 @@ public class VerifyPhoneNo extends AppCompatActivity {
     ImageView logo;
     FirebaseAuth mAuth;
     String codeBySystem,full_name, username, email, phone_no, password, address,WhatToDo;
+    String finalPhone_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +70,10 @@ public class VerifyPhoneNo extends AppCompatActivity {
         //get all the data from Intent
         WhatToDo = getIntent().getStringExtra("WhatToDo");
         phone_no = getIntent().getStringExtra("phone_no");
-//        if (phone_no.charAt(0) == '0') {
-//            phone_no = phone_no.substring(1);
-//        }
+        if (phone_no.charAt(0) == '0') {
+            phone_no = phone_no.substring(1);
+        }
+        finalPhone_no = phone_no;
         full_name = getIntent().getStringExtra("full_name");
         username = getIntent().getStringExtra("username");
         email = getIntent().getStringExtra("email");
@@ -71,7 +81,7 @@ public class VerifyPhoneNo extends AppCompatActivity {
         address = getIntent().getStringExtra("address");
 
         progressBar.setVisibility(View.GONE);
-        sendVerificationCodeToUser(phone_no);
+        sendVerificationCodeToUser(finalPhone_no);
 
         verify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +97,7 @@ public class VerifyPhoneNo extends AppCompatActivity {
             }
         });
     }
+
     private void sendVerificationCodeToUser(String phone_no){
 
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(mAuth)
@@ -152,7 +163,7 @@ public class VerifyPhoneNo extends AppCompatActivity {
 
     private void updateOlderUsersData() {
         Intent intent = new Intent(getApplicationContext(),SetNewPassword.class);
-        intent.putExtra("phone_no",phone_no);
+        intent.putExtra("phone_no",finalPhone_no);
         startActivity(intent);
         finish();
     }
@@ -161,13 +172,17 @@ public class VerifyPhoneNo extends AppCompatActivity {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         DatabaseReference reference = rootNode.getReference("users");
         boolean isAdmin;
+
         isAdmin = email.contains("@admin.com");
-        phone_no = phone_no;
-        User user = new User(full_name,username,email,phone_no,password,address, isAdmin);
+        User user = new User(full_name,username,email,finalPhone_no,password,address, isAdmin);
 
-        reference.child(phone_no).setValue(user);
+        reference.child(finalPhone_no).setValue(user);
 
-        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-        finish();
+//        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//        finish();
+
+        Intent intent = new Intent(getApplicationContext(), ChooseUserImage.class);
+        intent.putExtra("phone_no",finalPhone_no);
+        startActivity(intent);
     }
 }

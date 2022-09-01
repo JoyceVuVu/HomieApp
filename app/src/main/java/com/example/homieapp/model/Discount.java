@@ -1,60 +1,60 @@
 package com.example.homieapp.model;
 
 public class Discount {
-    private String discount_id;
-    private String discount_name;
-    private String discount_description;
-    private String discount_percent;
-    private String discount_imageUrl;
+    private String id;
+    private String name;
+    private String description;
+    private String percent;
+    private String image;
 
     public Discount() {
     }
 
-    public Discount(String discount_id, String discount_name, String discount_description, String discount_percent, String discount_imageUrl) {
-        this.discount_id = discount_id;
-        this.discount_name = discount_name;
-        this.discount_description = discount_description;
-        this.discount_percent = discount_percent;
-        this.discount_imageUrl = discount_imageUrl;
+    public Discount(String id, String name, String description, String percent, String image) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.percent = percent;
+        this.image = image;
     }
 
-    public String getDiscount_id() {
-        return discount_id;
+    public String getId() {
+        return id;
     }
 
-    public void setDiscount_id(String discount_id) {
-        this.discount_id = discount_id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getDiscount_name() {
-        return discount_name;
+    public String getName() {
+        return name;
     }
 
-    public void setDiscount_name(String discount_name) {
-        this.discount_name = discount_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDiscount_description() {
-        return discount_description;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscount_description(String discount_description) {
-        this.discount_description = discount_description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDiscount_percent() {
-        return discount_percent;
+    public String getPercent() {
+        return percent;
     }
 
-    public void setDiscount_percent(String discount_percent) {
-        this.discount_percent = discount_percent;
+    public void setPercent(String percent) {
+        this.percent = percent;
     }
 
-    public String getDiscount_imageUrl() {
-        return discount_imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setDiscount_imageUrl(String discount_imageUrl) {
-        this.discount_imageUrl = discount_imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.homieapp.R;
+import com.example.homieapp.model.Products;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,7 +49,7 @@ public class EditProduct extends AppCompatActivity {
     private ImageView edit_product_img;
     private ProgressBar progressBar;
     private Uri uri;
-    private DatabaseReference reference,cate_reference,discount_reference;
+    private DatabaseReference reference,cate_reference,discount_reference, cart_reference, favorite_reference;
     private StorageReference product_img_reference;
     private static final int GalleryPick = 1;
     private String downloadImageUrl;
@@ -161,14 +162,14 @@ public class EditProduct extends AppCompatActivity {
     }
     private void saveDate(String id,String name, String quantity,String price,String description, String category,String discount, String url){
         HashMap<String, Object> productMap = new HashMap<>();
-        productMap.put("ID", id);
-        productMap.put("Name", name);
-        productMap.put("Quantity", quantity);
-        productMap.put("Price", price);
-        productMap.put("Description", description);
-        productMap.put("Category", category);
-        productMap.put("Discount", discount);
-        productMap.put("Image", url);
+        productMap.put("id", id);
+        productMap.put("name", name);
+        productMap.put("quantity", quantity);
+        productMap.put("price", price);
+        productMap.put("description", description);
+        productMap.put("category", category);
+        productMap.put("discount", discount);
+        productMap.put("image", url);
         reference.child(id).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -191,13 +192,13 @@ public class EditProduct extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 edit_product_id.getEditText().setText(id);
                 edit_product_id.setEnabled(false);
-                edit_product_name.getEditText().setText(snapshot.child("Name").getValue(String.class));
-                edit_product_quantity.getEditText().setText(snapshot.child("Quantity").getValue(String.class));
-                edit_product_price.getEditText().setText(snapshot.child("Price").getValue(String.class));
-                edit_product_description.getEditText().setText(snapshot.child("Description").getValue(String.class));
-                defaultImageUrl = snapshot.child("Image").getValue(String.class);
+                edit_product_name.getEditText().setText(snapshot.child("name").getValue(String.class));
+                edit_product_quantity.getEditText().setText(snapshot.child("quantity").getValue(String.class));
+                edit_product_price.getEditText().setText(snapshot.child("price").getValue(String.class));
+                edit_product_description.getEditText().setText(snapshot.child("description").getValue(String.class));
+                defaultImageUrl = snapshot.child("image").getValue(String.class);
                 Glide.with(getApplicationContext()).load(defaultImageUrl).into(edit_product_img);
-                String product_cate_value = snapshot.child("Category").getValue(String.class);
+                String product_cate_value = snapshot.child("category").getValue(String.class);
                 List<String> list = new ArrayList<String>();
                 list.add(product_cate_value);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,list);
@@ -218,7 +219,7 @@ public class EditProduct extends AppCompatActivity {
                 final List<String> listId = new ArrayList<String>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
-                    String categoryId = snap.child("ID").getValue(String.class);
+                    String categoryId = snap.child("id").getValue(String.class);
                     listId.add(categoryId);
                 }
 

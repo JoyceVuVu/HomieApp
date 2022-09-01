@@ -25,17 +25,20 @@ import com.example.homieapp.model.Discount;
 import com.example.homieapp.model.ProductCategory;
 import com.example.homieapp.model.Products;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView productCatRecycler, proItemRecycler, discountRecycler;
     ImageView toolbar_ava;
+    TextView cate_view_all, discount_view_all, product_view_all;
     TextInputEditText enter_search;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CategoryAdapter categoryAdapter;
     ProductAdapter productAdapter;
     DiscountAdapter discountAdapter;
+    FloatingActionButton cart_fab;
 
 
     @Override
@@ -78,9 +82,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersDetails = sessionManager.getUserDetailFromSession();
-        String full_name = usersDetails.get(SessionManager.KEY_FULLNAME);
+        String user_name  = usersDetails.get(SessionManager.KEY_USERNAME);
+        String email = usersDetails.get(SessionManager.KEY_EMAIL);
+        String image_url = usersDetails.get(SessionManager.KEY_IMAGE);
+        headerUserName.setText(user_name);
+        headerUserEmail.setText(email);
+        Picasso.with(this).load(image_url).into(toolbar_ava);
+        Picasso.with(this).load(image_url).into(headerAva);
+
         //content main
         //Search();
+        cate_view_all = findViewById(R.id.home_view_all_category);
+        discount_view_all = findViewById(R.id.home_view_all_discount);
+        product_view_all = findViewById(R.id.home_view_all_product);
+        cate_view_all.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DashboardCategoryActivity.class)));
+        discount_view_all.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DashboardDiscountActivity.class)));
+        product_view_all.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DashboardProduct.class)));
 
         //Category
         productCatRecycler = findViewById(R.id.home_cate_recycler);
@@ -89,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new FirebaseRecyclerOptions.Builder<ProductCategory>()
                         .setQuery(FirebaseDatabase.getInstance().getReference("categories"), ProductCategory.class)
                         .build();
+        productCatRecycler.getRecycledViewPool().clear();
         categoryAdapter = new CategoryAdapter(options,this);
         productCatRecycler.setAdapter(categoryAdapter);
 
@@ -100,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new FirebaseRecyclerOptions.Builder<Products>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("products"),Products.class )
                 .build();
+        proItemRecycler.getRecycledViewPool().clear();
         productAdapter = new ProductAdapter(options1, this);
         proItemRecycler.setAdapter(productAdapter);
 
@@ -110,8 +129,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new FirebaseRecyclerOptions.Builder<Discount>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("discounts"),Discount.class )
                 .build();
+        discountRecycler.getRecycledViewPool().clear();
         discountAdapter = new DiscountAdapter(options2);
         discountRecycler.setAdapter(discountAdapter);
+
+        cart_fab = findViewById(R.id.home_fab);
+        cart_fab.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
     }
 
     @Override
@@ -131,36 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-    //    private void Search() {
-//        String query = enter_search.getText().toString().trim();
-//
-//    }
-
-//    private void SliderShow(){
-//        mFirebaseDatabase = FirebaseDatabase.getInstance();
-//        mFirebaseDatabase.getReference().child("slider_promotion").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot data:snapshot.getChildren()){
-//                    slideModelList.add(new SlideModel(data.child("url").getValue().toString(), data.child("title").getValue().toString(), ScaleTypes.FIT));
-//                    imageSlider.setImageList(slideModelList, ScaleTypes.FIT);
-////                    imageSlider.setItemClickListener(new ItemClickListener() {
-////                        @Override
-////                        public void onItemSelected(int i) {
-////
-////                        }
-////                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -171,21 +164,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, CartActivity.class));
                 break;
             case R.id.nav_chat:
-                startActivity(new Intent(this, ChatActivity.class));
+                startActivity(new Intent(this, AdminManagement.class));
                 break;
             case R.id.nav_heart:
+                startActivity( new Intent(MainActivity.this, DashboardFavoriteProduct.class));
                 break;
             case R.id.nav_help:
                 break;
             case R.id.nav_logout:
                 auth.signOut();
                 finish();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
             case R.id.nav_profile:
-                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
             case R.id.nav_promotion:
+                startActivity(new Intent(MainActivity.this, DiscountDetail.class));
                 break;
             case R.id.nav_purchase:
                 break;

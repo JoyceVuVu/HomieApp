@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.homieapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <application
+    <application xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.Light.NoActionBar">
+        android:theme="@style/Theme.Material3.Light.NoActionBar"
+        tools:replace="android:theme">
+        <activity
+            android:name=".Activity.EditPaymentMethod"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.CheckoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ChooseUserImage"
+            android:exported="false" />
         <activity
             android:name=".Activity.AdminManagement"
             android:exported="false" />
@@ -20,13 +31,13 @@
             android:name=".Activity.AddCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.IntroActivity"
+            android:name=".Activity.AddProductsActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.AddDiscount"
             android:exported="false" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".Activity.CartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +45,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.AddPaymentMethod" />
+        <activity android:name=".Activity.IntroActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.ProductsDetails" />
+        <activity android:name=".Activity.DashboardDiscountActivity" />
+        <activity android:name=".Activity.DashboardCategoryActivity" />
         <activity android:name=".Activity.EditCategory" />
         <activity android:name=".Activity.DashboardProduct" />
         <activity android:name=".Activity.EditDiscount" />
@@ -46,7 +63,7 @@
         <activity android:name=".Activity.ForgetPasswordSuccessMessage" />
         <activity android:name=".Activity.ResetPassActivity" />
         <activity android:name=".Activity.SetNewPassword" />
-        <activity android:name=".Activity.AddProductsActivity" />
+        <activity android:name=".Activity.DashboardFavoriteProduct" />
     </application>
 
 </manifest>

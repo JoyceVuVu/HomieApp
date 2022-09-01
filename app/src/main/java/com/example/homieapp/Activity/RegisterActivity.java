@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         String full_name = in_full_name.getEditText().getText().toString().trim();
         String username = in_user_name.getEditText().getText().toString().trim();
         String email = in_email.getEditText().getText().toString().trim();
-        String phone_no = in_phone_no.getEditText().getText().toString().trim().substring(1);
+        String phone_no = in_phone_no.getEditText().getText().toString().trim();
         String password = in_password.getEditText().getText().toString().trim();
         String confirm_password = in_confirm_password.getEditText().getText().toString().trim();
         String address = in_address.getEditText().getText().toString().trim();

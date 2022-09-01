@@ -103,7 +103,7 @@ public class AddProductsActivity extends AppCompatActivity {
                 final List<String> listId = new ArrayList<String>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
-                    String categoryId = snap.child("ID").getValue(String.class);
+                    String categoryId = snap.child("id").getValue(String.class);
                     listId.add(categoryId);
                 }
 
@@ -131,7 +131,7 @@ public class AddProductsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         String id = in_product_id.getEditText().getText().toString().trim();
         String name = in_product_name.getEditText().getText().toString().trim();
-        String quantity = in_product_qty.getEditText().getText().toString().trim();
+        String quantity =in_product_qty.getEditText().getText().toString().trim();
         String price = in_product_price.getEditText().getText().toString().trim();
         String description = in_product_description.getEditText().getText().toString().trim();
         String category = in_product_category.getSelectedItem().toString().trim();
@@ -168,14 +168,14 @@ public class AddProductsActivity extends AppCompatActivity {
                                         Toast.makeText(AddProductsActivity.this, "got the product image url successfully ...", Toast.LENGTH_SHORT).show();
 
                                         HashMap<String, Object> productMap = new HashMap<>();
-                                        productMap.put("ID", id);
-                                        productMap.put("Name", name);
-                                        productMap.put("Quantity", quantity);
-                                        productMap.put("Price", price);
-                                        productMap.put("Description", description);
-                                        productMap.put("Category", category);
-                                        productMap.put("Discount", discount);
-                                        productMap.put("Image", downloadImageUrl);
+                                        productMap.put("id", id);
+                                        productMap.put("name", name);
+                                        productMap.put("quantity", quantity);
+                                        productMap.put("price", price);
+                                        productMap.put("description", description);
+                                        productMap.put("category", category);
+                                        productMap.put("discount", discount);
+                                        productMap.put("image", downloadImageUrl);
                                         product_reference.child(id).updateChildren(productMap)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
@@ -204,34 +204,6 @@ public class AddProductsActivity extends AppCompatActivity {
         }
         return true;
     }
-
-//    private boolean validateDiscount() {
-//        String discount = (String) in_product_discount.getItemAtPosition(in_product_discount.getSelectedItemPosition());
-//        if (discount.isEmpty()) {
-//            setSpinnerError(in_product_discount,"field can't be empty");
-//            return false;
-//        }else return true;
-//    }
-//
-//    private boolean validateCategory() {
-//        String category = (String) in_product_category.getItemAtPosition(in_product_category.getSelectedItemPosition());
-//        if (category.isEmpty()) {
-//            setSpinnerError(in_product_category,"field can't be empty");
-//            return false;
-//        }else return true;
-//    }
-//    private void setSpinnerError(Spinner spinner, String error){
-//        View selectedView = spinner.getSelectedView();
-//        if (selectedView != null && selectedView instanceof TextView) {
-//            spinner.requestFocus();
-//            TextView selectedTextView = (TextView) selectedView;
-//            selectedTextView.setError("error"); // any name of the error will do
-//            selectedTextView.setTextColor(Color.RED); //text color in which you want your error message to be displayed
-//            selectedTextView.setText(error); // actual error message
-//            spinner.performClick(); // to open the spinner list if error is found.
-//
-//        }
-//    }
 
     private boolean validateDescription() {
         String description = in_product_description.getEditText().getText().toString().trim();

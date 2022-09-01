@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +25,8 @@ import com.example.homieapp.R;
 import com.example.homieapp.model.CheckInternet;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         remember_me = (CheckBox) findViewById(R.id.login_remember_me);
         phone_no_editText = findViewById(R.id.login_phone_no_editText);
         password_editText = findViewById(R.id.login_password_editText);
-
         //check whether phone number and password is already saved in Shared preferences or not
         SessionManager sessionManager= new SessionManager(LoginActivity.this, SessionManager.SESSION_REMEMBERME);
         if (sessionManager.checkRememberMe()){
@@ -131,8 +134,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void isUser() {
         progressBar.setVisibility(View.VISIBLE);
-        final String phone_no = in_phone_no.getEditText().getText().toString().trim().substring(1);
-        final String password = in_password.getEditText().getText().toString().trim();
+        String phone_no = in_phone_no.getEditText().getText().toString().trim();
+        if (phone_no.charAt(0) == '0'){
+            phone_no = phone_no.substring(1);
+        }
+        String password = in_password.getEditText().getText().toString().trim();
 
         if(remember_me.isChecked()){
             SessionManager sessionManager = new SessionManager(LoginActivity.this, SessionManager.SESSION_REMEMBERME);
@@ -141,34 +147,28 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
         Query checkUser = reference.orderByChild("phone_no").equalTo(phone_no);
+        String finalPhone_no = phone_no;
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     in_phone_no.setError(null);
                     in_phone_no.setErrorEnabled(false);
-                    String passwordFromDB = dataSnapshot.child(phone_no).child("pass").getValue(String.class);
+                    String passwordFromDB = dataSnapshot.child(finalPhone_no).child("pass").getValue(String.class);
                     if (passwordFromDB.equals(password)) {
                         in_phone_no.setError(null);
                         in_phone_no.setErrorEnabled(false);
 
-                        String full_nameFromDB = dataSnapshot.child(phone_no).child("full_name").getValue(String.class);
-                        String usernameFromDB = dataSnapshot.child(phone_no).child("username").getValue(String.class);
-                        String phoneNoFromDB = dataSnapshot.child(phone_no).child("phone_no").getValue(String.class);
-                        String emailFromDB = dataSnapshot.child(phone_no).child("email").getValue(String.class);
-                        String addressFromDB = dataSnapshot.child(phone_no).child("address").getValue(String.class);
-
-//                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                        intent.putExtra("full_name", full_nameFromDB);
-//                        intent.putExtra("username", usernameFromDB);
-//                        intent.putExtra("email", emailFromDB);
-//                        intent.putExtra("phone_no", phoneNoFromDB);
-//                        intent.putExtra("password", passwordFromDB);
-//                        intent.putExtra("address", addressFromDB);
-//                        startActivity(intent);
-                        //Create a session
+                        String full_nameFromDB = dataSnapshot.child(finalPhone_no).child("full_name").getValue(String.class);
+                        String usernameFromDB = dataSnapshot.child(finalPhone_no).child("username").getValue(String.class);
+                        String phoneNoFromDB = dataSnapshot.child(finalPhone_no).child("phone_no").getValue(String.class);
+                        String emailFromDB = dataSnapshot.child(finalPhone_no).child("email").getValue(String.class);
+                        String addressFromDB = dataSnapshot.child(finalPhone_no).child("address").getValue(String.class);
+                        String imageFromDB = dataSnapshot.child(finalPhone_no).child("image").getValue(String.class);
+                        String adminFromDB = String.valueOf(dataSnapshot.child(finalPhone_no).child("admin").getValue(Boolean.class));
+                        Log.d("phone_no: ", phoneNoFromDB );
                         SessionManager sessionManager = new SessionManager(LoginActivity.this, SessionManager.SESSION_USERSESSION);
-                        sessionManager.createLoginSession(full_nameFromDB, usernameFromDB, emailFromDB, phoneNoFromDB, passwordFromDB, addressFromDB);
+                        sessionManager.createLoginSession(full_nameFromDB, usernameFromDB, emailFromDB, phoneNoFromDB, passwordFromDB, addressFromDB, imageFromDB, adminFromDB);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                     } else {

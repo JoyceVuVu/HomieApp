@@ -62,5 +62,9 @@
     <string name="percent">Percent *</string>
     <string name="view_all">View all</string>
     <string name="save">Save</string>
+    <string name="lorem_text">Minimalist Styling Is Not About Creating A Cold, Hard, Empty White Box Of A Home. It Is About Using Simple And Natural Forms, And Taking Away Layers Without Losing The Aesthetic Appeal Of The Space. The Focus Is On Shape, With A Furniture And Accessories.</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="admin_management">Admin Management</string>
+    <string name="check_out">Check out</string>
 
 </resources>

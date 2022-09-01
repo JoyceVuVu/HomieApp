@@ -22,6 +22,8 @@ public class SessionManager {
     public static final  String KEY_EMAIL = "email";
     public static final  String KEY_PASSWORD = "password";
     public static final  String KEY_ADDRESS = "address";
+    public static final  String KEY_IMAGE = "image";
+    public static final  String KEY_ADMIN = "admin";
 
     //Remember me
     private static final  String IS_REMEMBERME = "isRememberMe";
@@ -36,7 +38,7 @@ public class SessionManager {
     }
 
     //User Login Session
-    public void createLoginSession(String full_name, String username, String email, String phone_no, String password, String address){
+    public void createLoginSession(String full_name, String username, String email, String phone_no, String password, String address, String image, String admin){
         editor.putBoolean(IS_LOGIN,true);
         editor.putString(KEY_FULLNAME,full_name);
         editor.putString(KEY_USERNAME,username);
@@ -44,6 +46,8 @@ public class SessionManager {
         editor.putString(KEY_PHONENO,phone_no);
         editor.putString(KEY_PASSWORD,password);
         editor.putString(KEY_ADDRESS,address);
+        editor.putString(KEY_IMAGE,image);
+        editor.putString(KEY_ADMIN,admin);
         editor.commit();
     }
     public HashMap<String, String > getUserDetailFromSession(){
