@@ -1,30 +1,30 @@
 package com.example.homieapp.model;
 
 public class Cart {
-    private String product_id;
-    private String quantity_order;
+   private Products products;
+   private String numberInCart;
 
     public Cart() {
     }
 
-    public Cart(String product_id, String quantity_order) {
-        this.product_id = product_id;
-        this.quantity_order = quantity_order;
+    public Cart(Products products, String numberInCart) {
+        this.products = products;
+        this.numberInCart = numberInCart;
     }
 
-    public String getProduct_id() {
-        return product_id;
+    public Products getProducts() {
+        return products;
     }
 
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
+    public void setProducts(Products products) {
+        this.products = products;
     }
 
-    public String getQuantity_order() {
-        return quantity_order;
+    public String getNumberInCart() {
+        return numberInCart;
     }
 
-    public void setQuantity_order(String quantity_order) {
-        this.quantity_order = quantity_order;
+    public void setNumberInCart(String numberInCart) {
+        this.numberInCart = numberInCart;
     }
 }

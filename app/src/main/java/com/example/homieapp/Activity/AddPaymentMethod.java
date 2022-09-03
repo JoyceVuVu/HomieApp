@@ -88,9 +88,9 @@ public class AddPaymentMethod extends AppCompatActivity {
     }
     private void addPaymentMethod() {
         if (cash_rad_btn.isChecked()){
-            String cash = "cash";
-            PaymentMethod paymentMethod = new PaymentMethod("cash","cash");
-            payment_reference.child(cash).setValue(paymentMethod).addOnCompleteListener(new OnCompleteListener<Void>() {
+            String account_number = "Cash";
+            PaymentMethod paymentMethod = new PaymentMethod(account_number);
+            payment_reference.child(account_number).setValue(paymentMethod).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     progressBar.setVisibility(View.GONE);

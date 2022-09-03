@@ -16,10 +16,19 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:replace="android:theme">
         <activity
+            android:name=".Activity.ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.EditPaymentMethod"
             android:exported="false" />
         <activity
-            android:name=".Activity.CheckoutActivity"
+            android:name=".Activity.DashboardFavoriteProduct"
             android:exported="false" />
         <activity
             android:name=".Activity.ChooseUserImage"
@@ -37,7 +46,7 @@
             android:name=".Activity.AddDiscount"
             android:exported="false" />
         <activity
-            android:name=".Activity.CartActivity"
+            android:name=".Activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,9 +54,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.DiscountDetail" />
         <activity android:name=".Activity.AddPaymentMethod" />
         <activity android:name=".Activity.IntroActivity" />
-        <activity android:name=".Activity.MainActivity" />
+        <activity
+            android:name=".Activity.CheckoutActivity"
+            android:exported="false" />
+        <activity android:name=".Activity.SuccessOrder"/>
         <activity android:name=".Activity.ProductsDetails" />
         <activity android:name=".Activity.DashboardDiscountActivity" />
         <activity android:name=".Activity.DashboardCategoryActivity" />
@@ -63,7 +76,7 @@
         <activity android:name=".Activity.ForgetPasswordSuccessMessage" />
         <activity android:name=".Activity.ResetPassActivity" />
         <activity android:name=".Activity.SetNewPassword" />
-        <activity android:name=".Activity.DashboardFavoriteProduct" />
+        <activity android:name=".Activity.CartActivity" />
     </application>
 
 </manifest>

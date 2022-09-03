@@ -12,10 +12,7 @@ public class Products implements Serializable {
      private String image;
      private String description;
      private String discount;
-     private String numberInCart;
 
-    public Products() {
-    }
     public Products(String id, String name, String quantity, String category, String price, String image, String description, String discount) {
         this.id = id;
         this.name = name;
@@ -27,25 +24,9 @@ public class Products implements Serializable {
         this.discount = discount;
     }
 
-    public Products(String id, String name, String quantity, String category, String price, String image, String description, String discount, String numberInCart) {
-        this.id = id;
-        this.name = name;
-        this.quantity = quantity;
-        this.category = category;
-        this.price = price;
-        this.image = image;
-        this.description = description;
-        this.discount = discount;
-        this.numberInCart = numberInCart;
+    public Products() {
     }
 
-    public String getNumberInCart() {
-        return numberInCart;
-    }
-
-    public void setNumberInCart(String numberInCart) {
-        this.numberInCart = numberInCart;
-    }
 
     public String getId() {
         return id;

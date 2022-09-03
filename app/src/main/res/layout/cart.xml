@@ -36,6 +36,15 @@
                     />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/cart_toast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:textSize="20sp"
+                android:text="Toast"
+                android:textColor="@color/black"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cart_item_recycler"

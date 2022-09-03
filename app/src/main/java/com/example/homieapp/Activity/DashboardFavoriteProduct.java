@@ -43,7 +43,7 @@ public class DashboardFavoriteProduct extends AppCompatActivity {
         back = findViewById(R.id.dashboard_back);
         activity_title = findViewById(R.id.dashboard_title);
         recyclerView = findViewById(R.id.recycler_dashboard);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL,false));
         back.setOnClickListener(view -> startActivity(new Intent(DashboardFavoriteProduct.this, MainActivity.class)));
         activity_title.setText("Favourite");
 

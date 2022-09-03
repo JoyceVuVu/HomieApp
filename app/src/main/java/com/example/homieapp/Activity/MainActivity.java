@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView productCatRecycler, proItemRecycler, discountRecycler;
     ImageView toolbar_ava;
     TextView cate_view_all, discount_view_all, product_view_all;
-    TextInputEditText enter_search;
+    SearchView enter_search;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -92,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //content main
         //Search();
+        enter_search = findViewById(R.id.search_bar);
+        enter_search.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
         cate_view_all = findViewById(R.id.home_view_all_category);
         discount_view_all = findViewById(R.id.home_view_all_discount);
         product_view_all = findViewById(R.id.home_view_all_product);

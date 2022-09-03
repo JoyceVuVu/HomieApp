@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homieapp.R;
+import com.example.homieapp.model.Cart;
 import com.example.homieapp.model.Products;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +64,7 @@ public class ProductsDetails extends AppCompatActivity {
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
 //        user_reference = FirebaseDatabase.getInstance().getReference("users");
         user_reference = FirebaseDatabase.getInstance().getReference("users");
-        back.setOnClickListener(view -> startActivity(new Intent(ProductsDetails.this, DashboardProduct.class)));
+        back.setOnClickListener(view -> onBackPressed());
         cart.setOnClickListener(view -> startActivity(new Intent(ProductsDetails.this,CartActivity.class)));
         showData();
         plus.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +98,7 @@ public class ProductsDetails extends AppCompatActivity {
 
     private void addToCart() {
 //        String _product_id = prod_id;
-        String quantity_order = number.getText().toString().trim();
+        String numberInCart = number.getText().toString().trim();
         //getCurrentUser
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersDetails = sessionManager.getUserDetailFromSession();
@@ -110,7 +111,7 @@ public class ProductsDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     String quantity_orderFromDB = snapshot.child(prod_id).child("numberInCart").getValue(String.class);
-                    int total_quantity =Integer.parseInt(quantity_orderFromDB) + Integer.parseInt(quantity_order);
+                    int total_quantity =Integer.parseInt(quantity_orderFromDB) + Integer.parseInt(numberInCart);
                     if (total_quantity > product_quantity){
                         Toast.makeText(getApplicationContext(), "The amount you choose has reached a maximum of this product\n", Toast.LENGTH_SHORT).show();
                     }else {
@@ -135,8 +136,9 @@ public class ProductsDetails extends AppCompatActivity {
                             String description = snapshot.child("description").getValue(String.class);
                             String discount = snapshot.child("discount").getValue(String.class);
 
-                            Products products = new Products(prod_id, name, quantity, category,price, image, description, discount, quantity_order);
-                            user_reference.child(user_id).child("carts").child(prod_id).setValue(products).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            Products products = new Products(prod_id, name, quantity, category,price, image, description, discount);
+                            Cart cart = new Cart(products, numberInCart);
+                            user_reference.child(user_id).child("carts").child(prod_id).setValue(cart).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
@@ -200,5 +202,6 @@ public class ProductsDetails extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 }

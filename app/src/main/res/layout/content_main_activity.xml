@@ -52,39 +52,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
-                <com.google.android.material.textfield.TextInputLayout
+                <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:hint="@string/search"
-                    app:boxStrokeColor="@color/purple_500"
-                    app:hintTextColor="@color/purple_500"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat"
-                        android:drawableLeft="@drawable/ic_search_2"
-                        android:drawablePadding="5dp"
-                        android:drawableTint="@color/purple_700"
-                        android:inputType="text"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button_colored"
+                    app:queryHint="Search here ..." />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -120,14 +106,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="16dp">
+                        android:gravity="center_vertical">
                         <TextView
                             android:id="@+id/home_discount_label"
                             android:layout_width="wrap_content"
@@ -157,14 +141,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="16dp">
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="16dp">
+                        android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/home_recent_label"

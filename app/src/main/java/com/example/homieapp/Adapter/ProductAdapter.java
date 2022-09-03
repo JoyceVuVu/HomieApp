@@ -29,7 +29,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAdapter.ProductViewHolder> {
     /**
@@ -39,6 +41,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
      * @param options
      */
     Context context;
+    List<Products> productsList = new ArrayList<>();
     DatabaseReference product_reference, product_favourite_reference;
     boolean isFavourite = false;
     public ProductAdapter(@NonNull FirebaseRecyclerOptions<Products> options, Context context) {
@@ -69,11 +72,12 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
                 holder.itemView.getContext().startActivity(intent);
             }
         });
-        product_favourite_reference.child(user_id).child("favourite").orderByChild(id).equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        product_favourite_reference.child(user_id).child("favourite").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
+                for (DataSnapshot sn:snapshot.getChildren()) {
+                    Products products = sn.getValue(Products.class);
+                    productsList.add(products);
                 }
             }
 
@@ -82,6 +86,33 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
 
             }
         });
+        for (int i = 0; i < productsList.size(); i++) {
+            String product_id = productsList.get(i).getId().trim();
+            product_reference.orderByChild("id").equalTo(product_id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+//        product_favourite_reference.child(user_id).child("favourite").orderByChild(id).equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+//                    holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
         holder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

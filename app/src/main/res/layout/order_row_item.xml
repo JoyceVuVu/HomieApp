@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="@color/white">
+        android:background="@color/background_gray">
 
         <ImageView
             android:id="@+id/order_product_img"

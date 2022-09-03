@@ -6,11 +6,11 @@ public class PaymentMethod {
     String cardholder_name;
     String ex_date;
     String CVV;
+    boolean isChecked;
 
     public PaymentMethod() {
     }
-    public PaymentMethod(String bank, String account_number){
-        this.bank = bank;
+    public PaymentMethod(String account_number){
         this.account_number = account_number;
     }
     public PaymentMethod(String bank, String account_number, String cardholder_name, String ex_date, String CVV) {
@@ -19,6 +19,14 @@ public class PaymentMethod {
         this.cardholder_name = cardholder_name;
         this.ex_date = ex_date;
         this.CVV = CVV;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public String getBank() {

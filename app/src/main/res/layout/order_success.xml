@@ -10,17 +10,17 @@
     android:paddingRight="8dp">
 
     <ImageView
-        android:id="@+id/imageView18"
+        android:id="@+id/order_successful_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ava1" />
+        android:src="@drawable/back" />
 
     <ImageView
-        android:id="@+id/imageView23"
+        android:id="@+id/order_successful_tick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,7 +32,7 @@
         android:src="@drawable/logo_nh"/>
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/order_successful_thankyou"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -43,20 +43,46 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView23" />
+        app:layout_constraintTop_toBottomOf="@+id/order_successful_tick" />
 
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:backgroundTint="@color/purple_500"
-        android:padding="8dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Continue shopping"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView20"
-        app:layout_constraintStart_toStartOf="@+id/textView20"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_successful_thankyou">
+
+        <Button
+            android:id="@+id/order_successful_home"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="Home"
+            android:textColor="@color/purple_500"
+            android:textSize="20sp"
+            app:strokeColor = "@color/purple_500"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+        <Space
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/order_successful_bill"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="History"
+            android:textColor="@color/purple_500"
+            android:textSize="20sp"
+            app:strokeColor = "@color/purple_500"
+            style="@style/Widget.Material3.Button.OutlinedButton"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

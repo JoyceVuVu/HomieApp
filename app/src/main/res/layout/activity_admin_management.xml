@@ -6,94 +6,120 @@
     android:layout_height="match_parent"
     tools:context=".Activity.AdminManagement"
     android:orientation="vertical">
-    <LinearLayout
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <Button
-            android:id="@+id/admin_management_back"
+        android:id="@+id/admin_tab_layout"
+        app:tabSelectedTextColor="@color/purple_500">
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon = "@drawable/back"
-            style="@style/Widget.Material3.Button.TextButton"/>
-        <TextView
-            android:id="@+id/admin_management_title"
+            android:text="Product" />
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Admin Management"
-            android:textColor="@color/purple_500"
-            android:textSize="30sp"
-            android:fontFamily="@font/montserrat"/>
-    </LinearLayout>
-    <LinearLayout
+            android:text="Category"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discount"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order"/>
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <Button
-            android:id="@+id/admin_add_product"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Add product"
-            android:fontFamily="@font/montserrat"/>
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/admin_edit_product"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Edit product"
-            android:fontFamily="@font/montserrat"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <Button
-            android:id="@+id/admin_add_category"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Add category"
-            android:fontFamily="@font/montserrat"/>
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/admin_edit_category"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Edit Category"
-            android:fontFamily="@font/montserrat"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <Button
-            android:id="@+id/admin_add_discount"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Add Discount"
-            android:fontFamily="@font/montserrat"/>
-        <Space
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/admin_edit_discount"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Edit Discount"
-            android:fontFamily="@font/montserrat"/>
-    </LinearLayout>
+        android:layout_height="match_parent"/>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center_vertical">-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_management_back"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:icon = "@drawable/back"-->
+<!--            style="@style/Widget.Material3.Button.TextButton"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/admin_management_title"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Admin Management"-->
+<!--            android:textColor="@color/purple_500"-->
+<!--            android:textSize="30sp"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--    </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center">-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_add_product"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:backgroundTint="@color/purple_500"-->
+<!--            android:text="Add product"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--        <Space-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="wrap_content"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_edit_product"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:backgroundTint="@color/purple_500"-->
+<!--            android:text="Edit product"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--    </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center">-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_add_category"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:backgroundTint="@color/purple_500"-->
+<!--            android:text="Add category"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--        <Space-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="wrap_content"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_edit_category"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:backgroundTint="@color/purple_500"-->
+<!--            android:text="Edit Category"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--    </LinearLayout>-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center">-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_add_discount"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:backgroundTint="@color/purple_500"-->
+<!--            android:text="Add Discount"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--        <Space-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="wrap_content"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/admin_edit_discount"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:backgroundTint="@color/purple_500"-->
+<!--            android:text="Edit Discount"-->
+<!--            android:fontFamily="@font/montserrat"/>-->
+<!--    </LinearLayout>-->
 
 </LinearLayout>

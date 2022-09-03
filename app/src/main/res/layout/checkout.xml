@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Shipping to"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/montserrat"
                 android:drawableRight="@drawable/ic_edit_1"/>
@@ -55,7 +55,7 @@
                 android:hint="@string/username"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/black"
-                android:textSize="14sp"/>
+                android:textSize="18sp"/>
             <EditText
                 android:id="@+id/checkout_phone_no_user"
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:hint="@string/phone_no"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/black"
-                android:textSize="14sp"/>
+                android:textSize="18sp"/>
             <EditText
                 android:id="@+id/checkout_address_user"
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                 android:hint="@string/address"
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:inputType="textMultiLine"/>
         </LinearLayout>
         <LinearLayout
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Order id"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/montserrat"/>
             <androidx.recyclerview.widget.RecyclerView
@@ -114,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 VND"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/montserrat"/>
             </LinearLayout>
@@ -127,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Payment Method"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/montserrat"
                 android:drawableRight="@drawable/ic_plus"/>
@@ -150,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date:"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/montserrat"/>
             <Space
                 android:layout_width="wrap_content"
@@ -161,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Current date"
-                android:textSize="16sp"/>
+                android:textSize="18sp"/>
         </LinearLayout>
         <Button
             android:id="@+id/checkout_btn"

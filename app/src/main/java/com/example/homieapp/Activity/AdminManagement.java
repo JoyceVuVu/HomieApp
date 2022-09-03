@@ -1,34 +1,57 @@
 package com.example.homieapp.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 
+import com.example.homieapp.Fragment.ViewPageAdapter;
 import com.example.homieapp.R;
+import com.google.android.material.tabs.TabLayout;
 
 public class AdminManagement extends AppCompatActivity {
-    Button back, add_product, edit_product, add_category, edit_category, add_discount, edit_discount;
+    TabLayout tabLayout;
+    ViewPager2 viewPager2;
+    ViewPageAdapter adapter;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_management);
 
-        back = findViewById(R.id.admin_management_back);
-        back.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, MainActivity.class)));
-        add_product = findViewById(R.id.admin_add_product);
-        add_product.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, AddProductsActivity.class)));
-        edit_product= findViewById(R.id.admin_edit_product);
-        edit_product.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, EditProduct.class)));
-        add_category = findViewById(R.id.admin_add_category);
-        add_category.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, AddCategoryActivity.class)));
-        edit_category = findViewById(R.id.admin_edit_category);
-        edit_category.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, EditCategory.class)));
-        add_discount = findViewById(R.id.admin_add_discount);
-        add_discount.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, AddDiscount.class)));
-        edit_discount = findViewById(R.id.admin_edit_discount);
-        edit_discount.setOnClickListener(view -> startActivity(new Intent(AdminManagement.this, EditDiscount.class)));
+        tabLayout = findViewById(R.id.admin_tab_layout);
+        viewPager2 = findViewById(R.id.viewpage);
+        adapter = new ViewPageAdapter(this);
+        viewPager2.setAdapter(adapter);
+
+//        tabLayout.setupWithViewPager(viewPager2, false);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
+            }
+        });
     }
 }
