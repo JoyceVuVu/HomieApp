@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,8 @@ import com.example.homieapp.R;
 import com.example.homieapp.model.Products;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +47,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
     List<Products> productsList = new ArrayList<>();
     DatabaseReference product_reference, product_favourite_reference;
     boolean isFavourite = false;
+    int isChecked = 0;
     public ProductAdapter(@NonNull FirebaseRecyclerOptions<Products> options, Context context) {
         super(options);
         this.context = context;
@@ -58,26 +62,19 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
         holder.product_price.setText(model.getPrice() + "VND");
         Picasso.with(holder.product_img.getContext()).load(model.getImage()).fit().centerCrop().into(holder.product_img);
         holder.product_price_discount.setText("Discount " + model.getDiscount());
-        holder.heart.setSelected(false);
 
         SessionManager sessionManager = new SessionManager(holder.itemView.getContext(),SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersDetails = sessionManager.getUserDetailFromSession();
         String user_id = usersDetails.get(SessionManager.KEY_SESSIONPHONENO);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(holder.itemView.getContext(), ProductsDetails.class);
-                intent.putExtra("ID", id);
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });
-        product_favourite_reference.child(user_id).child("favourite").addListenerForSingleValueEvent(new ValueEventListener() {
+        product_favourite_reference.child(user_id).child("favourite").orderByChild("id").equalTo(model.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot sn:snapshot.getChildren()) {
-                    Products products = sn.getValue(Products.class);
-                    productsList.add(products);
+                isFavourite = snapshot.exists();
+                if (isFavourite){
+                    holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
+                }else {
+                    holder.heart.setButtonDrawable(R.drawable.ic_heart);
                 }
             }
 
@@ -86,63 +83,40 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
 
             }
         });
-        for (int i = 0; i < productsList.size(); i++) {
-            String product_id = productsList.get(i).getId().trim();
-            product_reference.orderByChild("id").equalTo(product_id).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-//        product_favourite_reference.child(user_id).child("favourite").orderByChild(id).equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()){
-//                    holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         holder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isFavourite = true;
-                Query query = product_favourite_reference.child(user_id).child("favourite").orderByChild("id").equalTo(id);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()){
-                            isFavourite = false;
-                            holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
-                            snapshot.child(id).getRef().removeValue();
-                        }else {
-                            Products products = new Products(id, model.getName(), model.getQuantity(), model.getCategory(),model.getPrice(), model.getImage(), model.getDescription(), model.getDiscount());
-                            product_favourite_reference.child(user_id).child("favourite").child(id).setValue(products);
-                        }
-                        if (isFavourite == true){
-                            holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
-                        }else {
+                if (isFavourite) {
+                    product_favourite_reference.child(user_id).child("favourite").child(model.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
                             holder.heart.setButtonDrawable(R.drawable.ic_heart);
+                            Toast.makeText(context, "Product is removed", Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                    });
+                }
+                else {
+                    product_favourite_reference.child(user_id).child("favourite").child(model.getId()).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
+                            Toast.makeText(context, "Product is added", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), ProductsDetails.class);
+                intent.putExtra("ID", id);
+                intent.putExtra("fromPage", holder.itemView.getContext().toString());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @NonNull

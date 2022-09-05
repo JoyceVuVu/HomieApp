@@ -2,6 +2,7 @@ package com.example.homieapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,12 +40,15 @@ public class ProductsDetails extends AppCompatActivity {
     String prod_id, discount_id,percent;
     int product_quantity;
     int total_number = 1;
+    String fromPage;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.products_details_activity);
 
         prod_id = getIntent().getStringExtra("ID");
+        fromPage = getIntent().getStringExtra("fromPage");
+        Log.d("fromPage", fromPage);
         back = findViewById(R.id.product_detail_back);
         cart = findViewById(R.id.product_detail_cart);
         plus = findViewById(R.id.plus_btn);
@@ -64,7 +68,7 @@ public class ProductsDetails extends AppCompatActivity {
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
 //        user_reference = FirebaseDatabase.getInstance().getReference("users");
         user_reference = FirebaseDatabase.getInstance().getReference("users");
-        back.setOnClickListener(view -> onBackPressed());
+        back.setOnClickListener(view -> Back());
         cart.setOnClickListener(view -> startActivity(new Intent(ProductsDetails.this,CartActivity.class)));
         showData();
         plus.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +206,15 @@ public class ProductsDetails extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Back();
+    }
+    public void Back(){
+        if (fromPage == "com.example.homieapp.Activity.MainActivity@cb21aa"){
+            startActivity(new Intent(ProductsDetails.this, MainActivity.class));
+        }else if (fromPage == "com.example.homieapp.Activity.DashboảdProduct@cb21aa"){
+            startActivity((new Intent(ProductsDetails.this, DashboardProduct.class)));
+        }else {
+            finish();
+        }
     }
 }

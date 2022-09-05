@@ -55,7 +55,7 @@ public class CartActivity extends AppCompatActivity {
     public static List<Cart> cartList = new ArrayList<>();
     int overTotalPrice, total_discount;
     String  totalPrice;
-    int isCheckBox = 0;
+    boolean isCheckBox;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,13 +138,11 @@ public class CartActivity extends AppCompatActivity {
                                         String percent = snapshot.child("percent").getValue(String.class);
                                         int total_discount_onepiece = (int) (Integer.parseInt(price) * Float.parseFloat(percent) * Integer.parseInt(numberInCart));
                                         int price_oncPiece = Integer.parseInt(price) * Integer.parseInt(numberInCart);
-                                        if (b) {
-                                            isCheckBox++;
-//                                                        model.setSelected(true);
-//                                                    }else {
-//                                                        model.setSelected(false);
-                                        }
-                                        if (isCheckBox % 2 == 1) {
+                                        //                                                        model.setSelected(true);
+                                        //                                                    }else {
+                                        //                                                        model.setSelected(false);
+                                        isCheckBox = b;
+                                        if (isCheckBox == true) {
                                             overTotalPrice = overTotalPrice + price_oncPiece;
                                             total_discount = total_discount + total_discount_onepiece;
                                             totalPrice = String.valueOf(overTotalPrice - total_discount + delivery);

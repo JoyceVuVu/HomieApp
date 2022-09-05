@@ -1,12 +1,15 @@
 package com.example.homieapp.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,11 +44,12 @@ public class CheckoutActivity extends AppCompatActivity {
     private ImageView back;
     private Button payment_btn;
     private EditText current_username, current_user_phone, current_user_address;
-    private RecyclerView order_recycler, payment_recycler;
+    private RecyclerView order_recycler;
+    private Spinner payment_spinner;
     DatabaseReference order_reference, payment_reference, discount_reference, cart_reference, product_reference, bill_reference;
     String _order_id,randomID;
     String username, phone_no, address;
-    PaymentAdapter paymentAdapter;
+//    PaymentAdapter paymentAdapter;
     OrderAdapter orderAdapter;
     public static List<Cart> cartListItem = new ArrayList<>();
     String order_time, payment;
@@ -67,7 +71,7 @@ public class CheckoutActivity extends AppCompatActivity {
         order_id = findViewById(R.id.checkout_order_id);
         order_recycler = findViewById(R.id.checkout_product_order_recycler);
         total_price = findViewById(R.id.checkout_total);
-        payment_recycler = findViewById(R.id.checkout_payment_method_recycler);
+        payment_spinner = findViewById(R.id.checkout_payment_method_spinner);
         order_date = findViewById(R.id.checkout_order_time);
         payment_btn = findViewById(R.id.checkout_btn);
         add_method = findViewById(R.id.checkout_payment_method);
@@ -90,12 +94,11 @@ public class CheckoutActivity extends AppCompatActivity {
         _order_id = getIntent().getStringExtra("order_id");
         randomID = getIntent().getStringExtra("randomID");
         order_time = getIntent().getStringExtra("order_time");
-//         _order_id = "2022/09/02/16:54/HD965645160CC6A9E";
-//        String randomID = "HD965645160CC6A9E";
-//        order_time = "2022/09/02/16:54";
+//         _order_id = "2022/09/05/08:03/HD96564516060C03D";
+//        String randomID = "HD96564516060C03D";
+//        order_time = "2022/09/05/08:03";
 
         order_reference = FirebaseDatabase.getInstance().getReference("users").child(phone_no).child("orders").child(_order_id);
-        payment_reference = FirebaseDatabase.getInstance().getReference("users").child(phone_no);
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
         cart_reference = FirebaseDatabase.getInstance().getReference("users").child(phone_no).child("carts");
         product_reference = FirebaseDatabase.getInstance().getReference("products");
@@ -104,7 +107,6 @@ public class CheckoutActivity extends AppCompatActivity {
         add_method.setOnClickListener(view -> startActivity(new Intent(CheckoutActivity.this, AddPaymentMethod.class)));
         back.setOnClickListener(view -> cancel());
         order_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        payment_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         shipping_to.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +115,8 @@ public class CheckoutActivity extends AppCompatActivity {
                 current_user_address.setEnabled(true);
             }
         });
+        payment_reference = FirebaseDatabase.getInstance().getReference("users").child(phone_no).child("payment_method");
+        setSpinnerDataFromDB(payment_reference, this, payment_spinner);
         order_id.setText(randomID);
         order_date.setText(order_time);
         order_reference.addValueEventListener(new ValueEventListener() {
@@ -127,35 +131,51 @@ public class CheckoutActivity extends AppCompatActivity {
 
             }
         });
-        payment_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                payment();
-                Toast.makeText(getApplicationContext(), "Btn is clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
+    public void setSpinnerDataFromDB(DatabaseReference mRef, final Context context, final Spinner spinner) {
+        mRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    payment_method_error_toast.setVisibility(View.GONE);
+                    final List<String> listId = new ArrayList<String>();
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
+                        String categoryId = snap.child("account_number").getValue(String.class);
+                        listId.add(categoryId);
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, listId);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    spinner.setSelection(0);
+                }else {
+                    payment_method_error_toast.setVisibility(View.VISIBLE);
+                    payment_method_error_toast.setText("There is no method");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
     private void payment() {
+
+        if (!validateName() | !validatePhone() | !validateAddress()) {
+            return;
+        }else {
+            addBill();
+        }
+    }
+
+    private void addBill() {
         String username = current_username.getText().toString().trim();
         String userphone = current_user_phone.getText().toString().trim();
         String address = current_user_address.getText().toString().trim();
+        String payment = payment_spinner.getSelectedItem().toString().trim();
 
-        if (!validateName(username) | !validatePhone(userphone) | !validateAddress(address)) {
-            return;
-        }
-//        payment_reference.child("payment_method").orderByChild("isChecked").equalTo(true).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                 payment = snapshot.child("account_number").getValue(String.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         HashMap<String, Object> orderMap = new HashMap<>();
         orderMap.put("user_id", phone_no);
         orderMap.put("username", username);
@@ -163,73 +183,48 @@ public class CheckoutActivity extends AppCompatActivity {
         orderMap.put("phoneNumber", userphone);
         orderMap.put("address", address);
         orderMap.put("Confirmed", address);
-//        orderMap.put("payment_method", payment);
+        orderMap.put("payment_method", payment);
         bill_reference.child(_order_id).updateChildren(orderMap);
-        order_reference.updateChildren(orderMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        order_reference.updateChildren(orderMap);
+        order_reference.child("productList").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                order_reference.child("productList").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            Cart cartItem = ds.getValue(Cart.class);
-                            String numberInCart = cartItem.getNumberInCart();
-                            String quantity = cartItem.getProducts().getQuantity();
-                            String updateQuantity;
-                            do {
-                                updateQuantity = String.valueOf(Integer.parseInt(quantity) - Integer.parseInt(numberInCart));
-                            } while (Integer.parseInt(quantity) > 0);
-
-                            HashMap<String, Object> productMap = new HashMap<>();
-                            productMap.put("quantity", updateQuantity);
-                            product_reference.child(cartItem.getProducts().getId()).updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds:snapshot.getChildren()){
+                    Cart cart = ds.getValue(Cart.class);
+                    list.add(cart);
+                }
+                Log.d("cart", String.valueOf(list.size()));
+                for (int i = 0; i < list.size(); i++) {
+                    String numberInCart = list.get(i).getNumberInCart();
+                    String quantity = list.get(i).getProducts().getQuantity();
+                    String updateQuantity= String.valueOf(Integer.parseInt(quantity) - Integer.parseInt(numberInCart));
+                    HashMap<String , Object> updateProduct = new HashMap<>();
+                    updateProduct.put("quantity", updateQuantity);
+                    product_reference.child(list.get(i).getProducts().getId()).updateChildren(updateProduct).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(CheckoutActivity.this, "Product is updated in product_reference", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    DatabaseReference favorite_reference = FirebaseDatabase.getInstance().getReference("users").child(phone_no).child("favourite");
+                    favorite_reference.child(list.get(i).getProducts().getId()).updateChildren(updateProduct);
+                    cart_reference.child(list.get(i).getProducts().getId()).orderByChild("products/id").equalTo(list.get(i).getProducts().getId()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            snapshot.getRef().getRef().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(getApplicationContext(), "Product is updated", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            cart_reference.child(cartItem.getProducts().getId()).orderByChild("id").equalTo(cartItem.getProducts().getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    snapshot.getRef().removeValue();
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
+                                    Toast.makeText(CheckoutActivity.this, "Cart is updated", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-                startActivity(new Intent(CheckoutActivity.this, SuccessOrder.class));
-            }
-        });
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        payment_reference.child("payment_method").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    FirebaseRecyclerOptions<PaymentMethod> options =
-                            new FirebaseRecyclerOptions.Builder<PaymentMethod>()
-                                    .setQuery(payment_reference.child("payment_method"), PaymentMethod.class)
-                                    .build();
-                    paymentAdapter = new PaymentAdapter(options);
-                    payment_recycler.setAdapter(paymentAdapter);
-                    paymentAdapter.startListening();
-                }else {
-                    payment_method_error_toast.setText("There is no method");
-                    payment_method_error_toast.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    startActivity(new Intent(CheckoutActivity.this, SuccessOrder.class));
                 }
             }
 
@@ -238,6 +233,12 @@ public class CheckoutActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         order_reference.child("productList").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -254,6 +255,13 @@ public class CheckoutActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        payment_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                payment();
+                Toast.makeText(getApplicationContext(), "Btn is clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -280,8 +288,10 @@ public class CheckoutActivity extends AppCompatActivity {
         finish();
     }
 
-    private boolean validateAddress(String s) {
-        if (s.isEmpty()){
+    private boolean validateAddress() {
+        String address = current_user_address.getText().toString().trim();
+
+        if (address.isEmpty()){
             current_user_address.setError("Phone no is required!");
             current_user_address.requestFocus();
             return false;
@@ -292,8 +302,9 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validatePhone(String s) {
-        if (s.isEmpty()){
+    private boolean validatePhone() {
+        String userphone = current_user_phone.getText().toString().trim();
+        if (userphone.isEmpty()){
             current_user_phone.setError("Phone no is required!");
             current_user_phone.requestFocus();
             return false;
@@ -304,8 +315,9 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateName(String s) {
-        if (s.isEmpty()){
+    private boolean validateName() {
+        String username = current_username.getText().toString().trim();
+        if (username.isEmpty()){
             current_username.setError("Phone no is required!");
             current_username.requestFocus();
             return false;

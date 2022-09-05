@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //products
         proItemRecycler = findViewById(R.id.home_product_recycler);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2, LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL,false);
         proItemRecycler.setLayoutManager(layoutManager);
         FirebaseRecyclerOptions<Products> options1 =
                 new FirebaseRecyclerOptions.Builder<Products>()

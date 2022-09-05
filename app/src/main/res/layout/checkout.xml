@@ -78,7 +78,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginBottom="8dp">
             <TextView
@@ -92,7 +92,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/checkout_product_order_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                     android:textStyle="bold"
                     android:fontFamily="@font/montserrat"
                     android:textColor="@color/black"/>
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
@@ -121,7 +121,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/checkout_payment_method"
@@ -138,10 +138,12 @@
                 android:layout_height="wrap_content"
                 android:text="test"
                 android:visibility="gone"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/checkout_payment_method_recycler"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/checkout_payment_method_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                style="@style/Widget.AppCompat.TextView.SpinnerItem"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,7 +155,7 @@
                 android:text="Date:"
                 android:textSize="18sp"
                 android:fontFamily="@font/montserrat"/>
-            <Space
+            <androidx.legacy.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>

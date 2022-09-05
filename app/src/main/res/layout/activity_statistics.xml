@@ -1,35 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AdminManagement"
+    tools:context=".Activity.Statistics"
     android:orientation="vertical">
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/admin_tab_layout"
+        android:id="@+id/admin_tab_layout_statistic"
         app:tabSelectedTextColor="@color/purple_500">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product" />
+            android:text="Sales" />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category"/>
+            android:text="Bill"/>
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Discount"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order"/>
+            android:text="Hot"/>
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpage"
+        android:id="@+id/viewpage_statistic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

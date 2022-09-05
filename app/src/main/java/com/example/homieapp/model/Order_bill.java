@@ -13,7 +13,7 @@ public class Order_bill {
     String status;
     String payment_method;
     String total_price;
-    ArrayList<Products> productsList;
+    List<Products> productsList;
 
     public Order_bill() {
     }
@@ -113,11 +113,11 @@ public class Order_bill {
         this.total_price = total_price;
     }
 
-    public ArrayList<Products> getProductsList() {
+    public List<Products> getProductsList() {
         return productsList;
     }
 
-    public void setProductsList(ArrayList<Products> productsList) {
+    public void setProductsList(List<Products> productsList) {
         this.productsList = productsList;
     }
 }

@@ -9,15 +9,6 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
 
-    <ImageView
-        android:id="@+id/order_successful_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/back" />
 
     <ImageView
         android:id="@+id/order_successful_tick"
@@ -29,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.381"
-        android:src="@drawable/logo_nh"/>
+        android:src="@drawable/logo_nh" />
 
     <TextView
         android:id="@+id/order_successful_thankyou"
@@ -68,7 +59,7 @@
             android:textSize="20sp"
             app:strokeColor = "@color/purple_500"
             style="@style/Widget.Material3.Button.OutlinedButton"/>
-        <Space
+        <androidx.legacy.widget.Space
             android:layout_width="30dp"
             android:layout_height="wrap_content"/>
         <Button

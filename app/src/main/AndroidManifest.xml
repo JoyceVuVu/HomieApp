@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:replace="android:theme">
         <activity
-            android:name=".Activity.ReportActivity"
+            android:name=".Activity.Statistics"
             android:exported="false" />
         <activity
             android:name=".Activity.HistoryActivity"
@@ -60,7 +60,7 @@
         <activity
             android:name=".Activity.CheckoutActivity"
             android:exported="false" />
-        <activity android:name=".Activity.SuccessOrder"/>
+        <activity android:name=".Activity.SuccessOrder" />
         <activity android:name=".Activity.ProductsDetails" />
         <activity android:name=".Activity.DashboardDiscountActivity" />
         <activity android:name=".Activity.DashboardCategoryActivity" />
