@@ -38,6 +38,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/profile_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -119,7 +120,7 @@
                 android:layout_marginTop="40dp"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
-                android:background="@drawable/custom_button">
+                android:background="@drawable/background_radius_white">
 
                 <TextView
                     android:id="@+id/order_status"

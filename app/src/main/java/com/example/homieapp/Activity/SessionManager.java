@@ -23,7 +23,7 @@ public class SessionManager {
     public static final  String KEY_PASSWORD = "password";
     public static final  String KEY_ADDRESS = "address";
     public static final  String KEY_IMAGE = "image";
-    public static final  String KEY_ADMIN = "admin";
+    public static final  String KEY_ADMIN = "isAdmin";
 
     //Remember me
     private static final  String IS_REMEMBERME = "isRememberMe";
@@ -57,6 +57,7 @@ public class SessionManager {
         userData.put(KEY_EMAIL, usersSession.getString(KEY_EMAIL, null));
         userData.put(KEY_PHONENO, usersSession.getString(KEY_PHONENO, null));
         userData.put(KEY_PASSWORD, usersSession.getString(KEY_PASSWORD, null));
+        userData.put(KEY_IMAGE, usersSession.getString(KEY_IMAGE, null));
         userData.put(KEY_ADDRESS, usersSession.getString(KEY_ADDRESS, null));
         return userData;
     }

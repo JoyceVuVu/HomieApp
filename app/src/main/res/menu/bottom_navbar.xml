@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home_bottom"
-        android:enabled="true"
-        android:icon="@drawable/ic_home_2"
-        android:title="@string/home_bottom"/>
+        android:id="@+id/update"
+        android:title="Update"/>
     <item
-        android:id="@+id/favourite_bottom"
-        android:enabled="true"
-        android:visible="true"
-        android:icon="@drawable/ic_heart"
-        android:title="@string/heart_bottom"/>
-    <item
-        android:id="@+id/profile_bottom"
-        android:enabled="true"
-        android:icon="@drawable/ic_circle_user"
-        android:title="@string/profile_bottom"/>
+        android:id="@+id/delete"
+        android:title="Delete"/>
 </menu>

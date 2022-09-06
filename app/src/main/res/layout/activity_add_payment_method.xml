@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cash"
                     android:onClick="onRadioButtonClicked"/>
-                <Space
+                <androidx.legacy.widget.Space
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"/>
                 <RadioButton

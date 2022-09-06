@@ -171,10 +171,13 @@ public class VerifyPhoneNo extends AppCompatActivity {
     private void storeNewUserData() {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         DatabaseReference reference = rootNode.getReference("users");
-        boolean isAdmin;
-
-        isAdmin = email.contains("@admin.com");
-        User user = new User(full_name,username,email,finalPhone_no,password,address, isAdmin);
+        String admin;
+        if (email.contains("@admin.com")){
+            admin = "true";
+        }else {
+            admin = "false";
+        }
+        User user = new User(full_name,username,email,finalPhone_no,password,address, admin);
 
         reference.child(finalPhone_no).setValue(user);
 

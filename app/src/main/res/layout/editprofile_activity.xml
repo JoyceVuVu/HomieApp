@@ -1,180 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_500">
-
-    <ImageView
-        android:layout_width="1117dp"
-        android:layout_height="1006dp"
-        android:layout_marginBottom="200dp"
-        android:src="@drawable/path_520"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    tools:context=".Activity.RegisterActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <!--top-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/white"
+        android:padding="20dp"
+        android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_arrow_left_1"
-                app:tint="@color/white"
-                android:layout_weight="0.5"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/my_account"
-                android:textColor="@color/white"
-                android:textSize="26sp"
-                android:layout_weight="1.5"/>
-
-            <Button
-                android:id="@+id/profile_save"
-                style="@style/Widget.Material3.Button.TextButton.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:text="@string/save"
-                android:textColor="@color/purple_500"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-        <!--center-->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/edit_ava"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ava1"
+            app:shapeAppearanceOverlay="@style/circle" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/edit_ava"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_circle_user"
-                app:shapeAppearanceOverlay="@style/circle" />
-
-            <EditText
-                android:id="@+id/edit_profile_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/profile_username"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/edit_profile_full_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/profile_full_name"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/edit_profile_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/profile_email"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
-        <!--bottom-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp"
-            android:background="@drawable/background_radius_white">
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center">
 
-            <EditText
-                android:id="@+id/edit_order_status"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_full_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="60dp"
-                android:background="@drawable/profile_textview"
-                android:padding="22dp"
-                android:drawableLeft="@drawable/ic_truck"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="@string/orders_status"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-            <EditText
-                android:id="@+id/edit_profile_address"
+                android:hint="@string/full_name"
+                android:transitionName="full_name_tran"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/profile_textview"
-                android:padding="22dp"
-                android:drawableLeft="@drawable/ic_location"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="@string/address"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-            <EditText
-                android:id="@+id/edit_profile_phone_n0"
+                android:hint="@string/username"
+                app:counterMaxLength="15"
+                android:transitionName="username_tran"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/profile_textview"
-                android:padding="22dp"
-                android:drawableLeft="@drawable/ic_call"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="@string/phone_number"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-            <EditText
-                android:id="@+id/edit_profile_payment"
+                android:hint="@string/email"
+                android:transitionName="email_tran"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_phone_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/profile_textview"
-                android:padding="22dp"
-                android:drawableLeft="@drawable/ic_date"
-                android:drawablePadding="10dp"
-                android:paddingStart="15dp"
-                android:text="@string/payment"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:hint="@string/phone_no"
+                android:transitionName="phone_tran"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="number"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/address"
+                android:transitionName="password_tran"
+                app:boxStrokeColor="@color/purple_500"
+                app:hintTextColor="@color/purple_500"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:inputType="text">
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/edit_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminateTint="@color/purple_500"/>
+        <Button
+            android:id="@+id/edit_profile_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:backgroundTint="@color/purple_500"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat"
+            android:textSize="22sp"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/edit_profile_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/purple_500"
+            android:textSize="22sp"
+            android:text="Back"
+            android:textAlignment="center"
+            />
+
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

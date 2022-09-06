@@ -10,7 +10,7 @@ public class User {
     String pass;
     String address;
     String ava;
-    boolean isAdmin;
+    String admin;
 
     public User() {
     }
@@ -23,17 +23,17 @@ public class User {
         this.pass = password;
         this.address = address;
     }
-    public User(String full_name, String username, String email, String phone_no, String pass, String address, boolean isAdmin) {
+    public User(String full_name, String username, String email, String phone_no, String pass, String address, String isAdmin) {
         this.full_name = full_name;
         this.username = username;
         this.email = email;
         this.phone_no = phone_no;
         this.pass = pass;
         this.address = address;
-        this.isAdmin = isAdmin;
+        this.admin = isAdmin;
     }
 
-    public User(String full_name, String username, String email, String phone_no, String pass, String address, String ava, boolean isAdmin) {
+    public User(String full_name, String username, String email, String phone_no, String pass, String address, String ava, String isAdmin) {
         this.full_name = full_name;
         this.username = username;
         this.email = email;
@@ -41,15 +41,24 @@ public class User {
         this.pass = pass;
         this.address = address;
         this.ava = ava;
-        this.isAdmin = isAdmin;
+        this.admin = isAdmin;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+//    public User(String full_name, String username, String email, String address, String ava, String isAdmin) {
+//        this.full_name = full_name;
+//        this.username = username;
+//        this.email = email;
+//        this.address = address;
+//        this.ava = ava;
+//        this.admin = isAdmin;
+//    }
+
+    public String getAdmin() {
+        return admin;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setAdmin(String admin) {
+        this.admin = admin;
     }
 
     public User(String username, String email) {

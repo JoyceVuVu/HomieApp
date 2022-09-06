@@ -1,10 +1,12 @@
 package com.example.homieapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.homieapp.Activity.CheckoutActivity;
+import com.example.homieapp.Activity.ProductsDetails;
 import com.example.homieapp.R;
 import com.example.homieapp.model.Cart;
 import com.example.homieapp.model.Products;
@@ -47,6 +50,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.product_numberInCart.setText("x" + cartListItem.get(position).getNumberInCart());
         String discount = cartListItem.get(position).getProducts().getDiscount();
         String price = cartListItem.get(position).getProducts().getPrice();
+        String id = cartListItem.get(position).getProducts().getId();
         discount_reference.child(discount).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -61,6 +65,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             }
         });
         Glide.with(holder.itemView.getContext()).load(cartListItem.get(position).getProducts().getImage()).into(holder.product_img);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), ProductsDetails.class);
+                intent.putExtra("ID", id);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        holder.more.setVisibility(View.GONE);
     }
 
     @Override
@@ -71,12 +84,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
         public ImageView product_img;
         public TextView product_name, product_numberInCart, product_price;
+        public ImageView more;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             product_img = itemView.findViewById(R.id.order_product_img);
             product_name = itemView.findViewById(R.id.order_product_name);
             product_numberInCart = itemView.findViewById(R.id.order_number);
             product_price = itemView.findViewById(R.id.order_product_price);
+            more = itemView.findViewById(R.id.order_more);
         }
     }
 }

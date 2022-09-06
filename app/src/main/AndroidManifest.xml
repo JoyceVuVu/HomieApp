@@ -16,16 +16,22 @@
         android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:replace="android:theme">
         <activity
+            android:name=".Activity.UpdateBill"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.BillDetail"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Statistics"
             android:exported="false" />
         <activity
-            android:name=".Activity.HistoryActivity"
+            android:name=".Activity.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.EditPaymentMethod"
+            android:name=".Activity.AdminManagement"
             android:exported="false" />
         <activity
             android:name=".Activity.DashboardFavoriteProduct"
@@ -34,7 +40,7 @@
             android:name=".Activity.ChooseUserImage"
             android:exported="false" />
         <activity
-            android:name=".Activity.AdminManagement"
+            android:name=".Activity.EditPaymentMethod"
             android:exported="false" />
         <activity
             android:name=".Activity.AddCategoryActivity"
@@ -54,12 +60,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.PaymentActivity" />
         <activity android:name=".Activity.DiscountDetail" />
         <activity android:name=".Activity.AddPaymentMethod" />
-        <activity android:name=".Activity.IntroActivity" />
+        <activity android:name=".Activity.HistoryActivity" />
         <activity
             android:name=".Activity.CheckoutActivity"
             android:exported="false" />
+        <activity android:name=".Activity.EditProfile" />
         <activity android:name=".Activity.SuccessOrder" />
         <activity android:name=".Activity.ProductsDetails" />
         <activity android:name=".Activity.DashboardDiscountActivity" />
@@ -67,9 +75,9 @@
         <activity android:name=".Activity.EditCategory" />
         <activity android:name=".Activity.DashboardProduct" />
         <activity android:name=".Activity.EditDiscount" />
-        <activity android:name=".Activity.EditProduct" />
+        <activity android:name=".Activity.IntroActivity" />
         <activity android:name=".Activity.CategoryDetail" />
-        <activity android:name=".Activity.ProfileActivity" />
+        <activity android:name=".Activity.EditProduct" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.VerifyPhoneNo" />

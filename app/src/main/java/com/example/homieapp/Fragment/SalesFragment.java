@@ -2,12 +2,15 @@ package com.example.homieapp.Fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,10 @@ import android.widget.TextView;
 
 import com.example.homieapp.Activity.HistoryActivity;
 import com.example.homieapp.Activity.MonthYearPickerDialog;
+import com.example.homieapp.Adapter.OrderAdapter;
+import com.example.homieapp.Adapter.OrderBillAdapter;
 import com.example.homieapp.R;
+import com.example.homieapp.model.Cart;
 import com.example.homieapp.model.Order_bill;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -33,7 +39,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import kotlin.collections.unsigned.UArraysKt;
 
@@ -46,8 +54,9 @@ public class SalesFragment extends Fragment {
     DatabaseReference bill_reference;
     Calendar cal;
     int dayNow, monthNow;
-    OrderAdapter adapter;
-    int totalSales;
+    OrderBillAdapter adapter;
+    List<Order_bill> order_billList = new ArrayList<>();
+    String order_date, paths;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +71,13 @@ public class SalesFragment extends Fragment {
         month = root.findViewById(R.id.month);
         day = root.findViewById(R.id.day);
         recyclerView = root.findViewById(R.id.sales_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
         total = root.findViewById(R.id.sale_total_value);
         filter = root.findViewById(R.id.sales_fragment_filter);
         cal = Calendar.getInstance();
         bill_reference = FirebaseDatabase.getInstance().getReference("bills");
-        FirebaseRecyclerOptions<Order_bill> options = new FirebaseRecyclerOptions.Builder<Order_bill>()
-                .setQuery(bill_reference, Order_bill.class)
-                .build();
-        adapter = new OrderAdapter(options);
-        recyclerView.setAdapter(adapter);
+        showAll();
         dayPicker();
         monthPicker();
         yearPicker();
@@ -84,25 +91,28 @@ public class SalesFragment extends Fragment {
         return root;
 
     }
-
-    private void filterSales() {
-        String day_spinner = day.getSelectedItem().toString().trim();
-        String month_spinner = month.getSelectedItem().toString().trim();
-        String year_spinner = year.getSelectedItem().toString().trim();
-        String paths = "";
-        if (year_spinner != "Year" && month_spinner != "Month" && day_spinner != "Day") {
-            paths = year_spinner + "/" + month_spinner + "/" + day_spinner + "/";
-        } else if (year_spinner != "Year" && month_spinner != "Month"){
-            paths = year_spinner + "/" + month_spinner + "/";
-        }else if (year_spinner != "Year"){
-            paths = year_spinner + "/";
-        }
-        bill_reference.child(paths).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void showAll(){
+        bill_reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds:snapshot.getChildren()) {
-
+                String price = "";
+                int totalSales = 0;
+                String date;
+                order_billList.clear();
+                for (DataSnapshot ds: snapshot.getChildren()) {
+                    Order_bill order_bill = ds.getValue(Order_bill.class);
+                    Log.d("orderbill", order_bill.getOrder_id());
+                    order_billList.add(order_bill);
+                    price = ds.child("totalPrice").getValue(String.class).trim();
+                    totalSales = totalSales + Integer.parseInt(price);
+//                    adapter = new OrderBillAdapter(order_billList, getContext());
+//                    recyclerView.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
                 }
+                adapter = new OrderBillAdapter(order_billList, getContext());
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                total.setText(totalSales + " VND");
             }
 
             @Override
@@ -110,18 +120,65 @@ public class SalesFragment extends Fragment {
 
             }
         });
-        FirebaseRecyclerOptions<Order_bill> options = new FirebaseRecyclerOptions.Builder<Order_bill>()
-                .setQuery(bill_reference.child(paths), Order_bill.class)
-                .build();
-        adapter = new OrderAdapter(options);
-        recyclerView.setAdapter(adapter);
+    }
+
+    private void filterSales() {
+        String day_spinner = day.getSelectedItem().toString().trim();
+        String month_spinner = month.getSelectedItem().toString().trim();
+        String year_spinner = year.getSelectedItem().toString().trim();
+        if (year_spinner != "Year" && month_spinner != "Month" && day_spinner != "Day") {
+            paths = year_spinner + "/" + month_spinner + "/" + day_spinner + "/";
+        } else if (year_spinner != "Year" && month_spinner != "Month"){
+            paths = year_spinner + "/" + month_spinner + "/";
+        }else if (year_spinner != "Year") {
+            paths = year_spinner + "/";
+        }else {
+            showAll();
+        }
+
+        bill_reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String price = "";
+                int totalSales = 0;
+                String date;
+                order_billList.clear();
+                for (DataSnapshot ds:snapshot.getChildren()) {
+                     date = ds.child("date").getValue(String.class).trim();
+                    price = ds.child("totalPrice").getValue(String.class).trim();
+                    Order_bill order_bill = ds.getValue(Order_bill.class);
+                    if (date.contains(paths)) {
+                        totalSales = totalSales + Integer.parseInt(price);
+                        order_billList.add(order_bill);
+                    }
+
+                }
+                total.setText(totalSales + " VND");
+                adapter = new OrderBillAdapter(order_billList, getContext());
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
     private void dayPicker() {
-        String[] mValue= {"Day", "01" ,"02", "03","04","05","06","07","08","09","11","12","13","14","15","16","17","18","19","20",
-                "21", "22", "23", "24","25","26","27","28","29","30","31"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,mValue);
-        day.setAdapter(adapter);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dayNow = cal.get(Calendar.DAY_OF_MONTH);
+        Log.d("dayNow", String.valueOf(dayNow));
+        List<String> list  = new ArrayList<>();
+        list.add(0, "Day");
+        for (int i = 1; i <32 ; i++) {
+            String s;
+            if (i < 10){
+                s = "0" + i;
+                list.add(i, s);
+            }else list.add(i,String.valueOf(i));
+        }
+        setSpinnerDataFromDB(list, getContext(),day, String.valueOf(monthNow));
     }
 
 
@@ -132,7 +189,7 @@ public class SalesFragment extends Fragment {
 
         String[] tempArray = new String[arraySize];
         tempArray[0] = "Year";
-        int tempYear = minYear;
+        int tempYear = minYear + 1;
 
         for(int i=0 ; i < arraySize; i++){
             if(i != 0){
@@ -147,48 +204,32 @@ public class SalesFragment extends Fragment {
     }
     private void monthPicker(){
         monthNow = cal.get(Calendar.MONTH);
-        String[] mValue= {"Month", "01" ,"02", "03","04","05","06","07","08","09","11","12"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,mValue);
-        month.setAdapter(adapter);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Log.d("monthNow", String.valueOf(monthNow));
+        List<String> list  = new ArrayList<>();
+        list.add(0, "Month");
+        for (int i = 1; i <13 ; i++) {
+            String s;
+            if (i < 10){
+                s = "0" + i;
+                list.add(i, s);
+            }else list.add(i,String.valueOf(i));
+        }
+        setSpinnerDataFromDB(list, getContext(),month, String.valueOf(monthNow));
 
     }
-    private class OrderAdapter extends FirebaseRecyclerAdapter<Order_bill, OrderAdapter.OrderBillViewHolder> {
-        /**
-         * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-         * {@link FirebaseRecyclerOptions} for configuration options.
-         *
-         * @param options
-         */
-        public OrderAdapter(@NonNull FirebaseRecyclerOptions<Order_bill> options) {
-            super(options);
-        }
+    public void setSpinnerDataFromDB(List<String> list, final Context context, final Spinner spinner, String s) {
 
-        @Override
-        protected void onBindViewHolder(@NonNull OrderBillViewHolder holder, int position, @NonNull Order_bill model) {
-            holder.bill_date.setText(model.getDate());
-            holder.bill_id.setText(model.getId());
-            holder.bill_totalPrice.setText(model.getTotal_price());
-            totalSales = totalSales + Integer.parseInt(model.getTotal_price());
-            total.setText(String.valueOf(totalSales));
-        }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, list);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(adapter);
 
-        @NonNull
-        @Override
-        public OrderBillViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new OrderBillViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_row, parent, false));
-        }
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).equals(s)){
+                        spinner.setSelection(i);
+                        Log.d("position", String.valueOf(i));
+                    }
+                }
 
-        private class OrderBillViewHolder extends RecyclerView.ViewHolder {
-            TextView bill_date, bill_id, bill_totalPrice;
-
-            public OrderBillViewHolder(@NonNull View itemView) {
-                super(itemView);
-                bill_date = itemView.findViewById(R.id.bill_date);
-                bill_id = itemView.findViewById(R.id.bill_id);
-                bill_totalPrice = itemView.findViewById(R.id.bill_totalPrice);
-            }
-        }
     }
 
 }

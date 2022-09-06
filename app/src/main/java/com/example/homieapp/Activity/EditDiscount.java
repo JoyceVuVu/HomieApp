@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class EditDiscount extends AppCompatActivity {
     private TextInputLayout edit_discount_id, edit_discount_name, edit_discount_description, edit_discount_percent;
     private TextView activity_title;
     private Button finish;
+    private ImageButton back;
     private ProgressBar progressBar;
     private DatabaseReference reference;
     private StorageReference discount_img_reference;
@@ -56,9 +58,11 @@ public class EditDiscount extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_discount);
 
-        id = "bansofa";
+        id = getIntent().getStringExtra("ID");
 
         //hooks
+        back = findViewById(R.id.add_discount_back);
+        back.setOnClickListener(view -> finish());
         edit_discount_id = findViewById(R.id.add_discount_id);
         edit_discount_name = findViewById(R.id.add_discount_name);
         edit_discount_percent = findViewById(R.id.add_discount_percent);

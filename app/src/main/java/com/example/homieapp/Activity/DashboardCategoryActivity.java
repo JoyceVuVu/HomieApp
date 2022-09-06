@@ -58,4 +58,10 @@ public class DashboardCategoryActivity extends AppCompatActivity {
         super.onStop();
         categoryAdapter.startListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(DashboardCategoryActivity.this, MainActivity.class));
+    }
 }

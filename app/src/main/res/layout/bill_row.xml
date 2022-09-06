@@ -5,19 +5,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="4dp"
     app:cardCornerRadius="10dp"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:background="@drawable/custom_button_colored">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/bill_date"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:textSize="16sp"
-            android:text="4/9"
-            android:layout_margin="2dp"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/bill_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:textSize="16sp"
+                android:text="4/9"
+                android:layout_margin="2dp"/>
+            <TextView
+                android:id="@+id/bill_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:textSize="16sp"
+                android:text="4/9"
+                android:textColor="@color/purple_500"
+                android:layout_margin="2dp"/>
+        </LinearLayout>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerThickness = "1dp"
+            app:dividerColor = "@color/purple_200"
+            app:dividerInsetEnd	= "150dp"
+            style="@style/Widget.Material3.MaterialDivider"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:text="1223444"
                 android:layout_weight="1"/>
             <TextView
@@ -37,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="1233"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:layout_weight="0.5"
                 android:textAlignment="textEnd"/>
         </LinearLayout>

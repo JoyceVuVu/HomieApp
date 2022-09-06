@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class AddCategoryActivity extends AppCompatActivity {
    private ImageView in_cate_img;
    private Button finish;
    private ProgressBar progressBar;
+   private ImageButton back;
    private Uri uri;
    private DatabaseReference cate_reference;
    private StorageReference cate_img_reference;
@@ -50,11 +52,13 @@ public class AddCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_category);
 
         //hooks
-        in_cate_id = (TextInputLayout) findViewById(R.id.add_cate_id);
-        in_cate_name = (TextInputLayout) findViewById(R.id.add_cate_name);
-        in_cate_img = (ImageView) findViewById(R.id.add_cate_img);
-        finish = (Button) findViewById(R.id.add_cate_btn);
-        progressBar = (ProgressBar) findViewById(R.id.add_cate_progressbar);
+        back = findViewById(R.id.add_cate_back);
+        back.setOnClickListener(view -> finish());
+        in_cate_id = findViewById(R.id.add_cate_id);
+        in_cate_name = findViewById(R.id.add_cate_name);
+        in_cate_img = findViewById(R.id.add_cate_img);
+        finish = findViewById(R.id.add_cate_btn);
+        progressBar = findViewById(R.id.add_cate_progressbar);
 
         cate_img_reference = FirebaseStorage.getInstance().getReference("category images");
         cate_reference = FirebaseDatabase.getInstance().getReference("categories");

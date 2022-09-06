@@ -54,4 +54,10 @@ public class AdminManagement extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(AdminManagement.this, MainActivity.class));
+    }
 }

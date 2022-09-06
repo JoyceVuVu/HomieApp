@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.SalesFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -16,11 +17,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="1">
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
@@ -40,14 +36,17 @@
                     android:autofillHints="Day"
                     android:layout_weight="1"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/sales_fragment_filter"
-                android:backgroundTint="@color/purple_500"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Filter"
-                android:fontFamily="@font/montserrat"/>
-        </LinearLayout>
+        <Button
+            android:id="@+id/sales_fragment_filter"
+            android:backgroundTint="@color/purple_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon = "@drawable/ic_filter_2"
+            android:text="Filter"
+            android:fontFamily="@font/montserrat"
+            android:layout_gravity="right"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sales_recycler"
             android:layout_width="match_parent"

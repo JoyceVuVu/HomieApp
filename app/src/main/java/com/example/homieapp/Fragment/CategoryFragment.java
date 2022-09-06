@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,12 +58,7 @@ public class CategoryFragment extends Fragment {
         registerForContextMenu(recyclerView);
 
         actionButton = root.findViewById(R.id.category_fragment_fab);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddDiscount.class));
-            }
-        });
+        actionButton.setOnClickListener(view -> startActivity(new Intent(getContext(), AddCategoryActivity.class)));
         category_reference = FirebaseDatabase.getInstance().getReference("categories");
         FirebaseRecyclerOptions<ProductCategory> options = new FirebaseRecyclerOptions.Builder<ProductCategory>()
                 .setQuery(category_reference, ProductCategory.class)
@@ -71,12 +68,41 @@ public class CategoryFragment extends Fragment {
                     @Override
                     protected void onBindViewHolder(@NonNull CategoryFragment.CategoryFragmentViewHolder holder, int position, @NonNull ProductCategory model) {
                         holder.id.setText(model.getName());
-                        holder.percent.setText(model.getId());
+                        holder.name.setText(model.getId());
                         id = model.getId();
-                        holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                        holder.more.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                                getActivity().getMenuInflater().inflate(R.menu.context_menu, contextMenu);
+                            public void onClick(View view) {
+                                PopupMenu menu = new PopupMenu(getContext(), holder.more);
+                                menu.inflate(R.menu.bottom_navbar);
+                                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem menuItem) {
+                                        switch (menuItem.getItemId()){
+                                            case R.id.update:
+                                                Intent intent = new Intent(getContext(), EditCategory.class);
+                                                intent.putExtra("ID", model.getId());
+                                                holder.itemView.getContext().startActivity(intent);
+                                                return true;
+                                            case R.id.delete:
+                                                category_reference.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        snapshot.getRef().removeValue();
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                                return true;
+                                            default:
+                                                return false;
+                                        }
+                                    }
+                                });
+                                menu.show();
                             }
                         });
 
@@ -94,48 +120,14 @@ public class CategoryFragment extends Fragment {
     }
 
     private class CategoryFragmentViewHolder extends RecyclerView.ViewHolder {
-        TextView id, percent;
+        TextView id, name;
+        ImageView more;
         public CategoryFragmentViewHolder(@NonNull View itemView) {
             super(itemView);
+            more = itemView.findViewById(R.id.fragment_item_more);
             id = itemView.findViewById(R.id.fragment_discount_id);
-            percent = itemView.findViewById(R.id.fragment_discount_percent);
+            name = itemView.findViewById(R.id.fragment_discount_percent);
         }
     }
 
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_view:
-                Intent intent = new Intent(getContext(), CategoryDetail.class);
-                intent.putExtra("ID", id);
-                startActivity(intent);
-                return true;
-            case R.id.menu_add:
-                Intent intent1 = new Intent(getContext(), AddCategoryActivity.class);
-                intent1.putExtra("ID", id);
-                startActivity(intent1);
-                return true;
-            case R.id.menu_update:
-                Intent intent3 = new Intent(getContext(), EditCategory.class);
-                intent3.putExtra("ID", id);
-                startActivity(intent3);
-                return true;
-            case R.id.menu_delete:
-                category_reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        snapshot.getRef().removeValue();
-                        Toast.makeText(getContext(), "This item is deleted", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
 }

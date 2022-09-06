@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class EditCategory extends AppCompatActivity {
     private TextInputEditText edit_cate_id, edit_cate_name;
     private TextView activity_title;
     private Button finish;
+    private ImageButton back;
     private ProgressBar progressBar;
     private DatabaseReference reference;
     private StorageReference cate_img_reference;
@@ -62,9 +64,11 @@ public class EditCategory extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_category);
 
-        id = "ban";
+        id = getIntent().getStringExtra("ID");
 
         //hooks
+        back = findViewById(R.id.add_cate_back);
+        back.setOnClickListener(view -> finish());
         edit_cate_id = findViewById(R.id.add_cate_id_edit);
         edit_cate_name = findViewById(R.id.add_cate_name_edit);
         finish = findViewById(R.id.add_cate_btn);

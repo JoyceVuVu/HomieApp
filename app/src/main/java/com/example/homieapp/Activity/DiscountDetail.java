@@ -38,6 +38,7 @@ public class DiscountDetail extends AppCompatActivity {
         //hooks
         back = findViewById(R.id.dashboard_back);
         activity_title = findViewById(R.id.dashboard_title);
+        activity_title.setText("Products");
         recyclerView = findViewById(R.id.recycler_dashboard);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -45,7 +46,7 @@ public class DiscountDetail extends AppCompatActivity {
         discount_id = getIntent().getStringExtra("ID");
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
         product_reference = FirebaseDatabase.getInstance().getReference("products");
-        discount_reference.child(discount_id).addValueEventListener(new ValueEventListener() {
+        discount_reference.orderByChild("id").equalTo(discount_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String discount_name = snapshot.child("name").getValue(String.class);
@@ -63,7 +64,7 @@ public class DiscountDetail extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Query query=product_reference.orderByChild("discount").equalTo(discount_id);
+        Query query = product_reference.orderByChild("discount").equalTo(discount_id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -87,5 +88,11 @@ public class DiscountDetail extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         productAdapter.startListening();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

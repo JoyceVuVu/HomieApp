@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -48,8 +49,9 @@ public class EditProduct extends AppCompatActivity {
     private Spinner edit_spinner_category, edit_discount_spinner;
     private ImageView edit_product_img;
     private ProgressBar progressBar;
+    private ImageButton back;
     private Uri uri;
-    private DatabaseReference reference,cate_reference,discount_reference, cart_reference, favorite_reference;
+    private DatabaseReference reference,cate_reference,discount_reference;
     private StorageReference product_img_reference;
     private static final int GalleryPick = 1;
     private String downloadImageUrl;
@@ -63,9 +65,11 @@ public class EditProduct extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_products);
 
-        id = "bansofa";
+
+        id = getIntent().getStringExtra("ID");
 
         //hooks
+        back = findViewById(R.id.add_product_back);
         edit_product_id = findViewById(R.id.add_product_id);
         edit_product_name = findViewById(R.id.add_product_name);
         edit_product_price = findViewById(R.id.add_product_price);
@@ -85,8 +89,8 @@ public class EditProduct extends AppCompatActivity {
          cate_reference = FirebaseDatabase.getInstance().getReference("categories");
          discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
 
-        setSpinnerDataFromDB(cate_reference, this, edit_spinner_category);
-        setSpinnerDataFromDB(discount_reference, this, edit_discount_spinner);
+//        setSpinnerDataFromDB(cate_reference, this, edit_spinner_category);
+//        setSpinnerDataFromDB(discount_reference, this, edit_discount_spinner);
 
         edit_product_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +107,7 @@ public class EditProduct extends AppCompatActivity {
                 updateData();
             }
         });
+        back.setOnClickListener(view -> finish());
         
     }
 
@@ -198,12 +203,10 @@ public class EditProduct extends AppCompatActivity {
                 edit_product_description.getEditText().setText(snapshot.child("description").getValue(String.class));
                 defaultImageUrl = snapshot.child("image").getValue(String.class);
                 Glide.with(getApplicationContext()).load(defaultImageUrl).into(edit_product_img);
-                String product_cate_value = snapshot.child("category").getValue(String.class);
-                List<String> list = new ArrayList<String>();
-                list.add(product_cate_value);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,list);
-                edit_spinner_category.setAdapter(adapter);
-
+                String categoryFromDB = snapshot.child("category").getValue(String.class);
+                setSpinnerDataFromDB(cate_reference, getApplicationContext(), edit_spinner_category, categoryFromDB);
+                String discount_id = snapshot.child("discount").getValue(String.class);
+                setSpinnerDataFromDB(discount_reference, getApplicationContext(), edit_discount_spinner, discount_id);
             }
 
             @Override
@@ -212,7 +215,7 @@ public class EditProduct extends AppCompatActivity {
             }
         });
     }
-    public void setSpinnerDataFromDB(DatabaseReference mRef, final Context context, final Spinner spinner) {
+    public void setSpinnerDataFromDB(DatabaseReference mRef, final Context context, final Spinner spinner, String s) {
         mRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -226,6 +229,12 @@ public class EditProduct extends AppCompatActivity {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, listId);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
+
+                for (int i = 0; i < listId.size(); i++) {
+                    if (listId.get(i).equals(s)){
+                        spinner.setSelection(i);
+                    }
+                }
             }
 
             @Override

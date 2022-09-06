@@ -60,4 +60,10 @@ public class DashboardDiscountActivity extends AppCompatActivity {
         super.onStop();
         discountAdapter.stopListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(DashboardDiscountActivity.this, MainActivity.class));
+    }
 }

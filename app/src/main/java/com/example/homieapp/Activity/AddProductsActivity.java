@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -47,6 +48,7 @@ public class AddProductsActivity extends AppCompatActivity {
     private Spinner in_product_category, in_product_discount;
     private ImageView in_product_img;
     private Button finish;
+    private ImageButton back;
     private ProgressBar progressBar;
     private Uri uri;
     private DatabaseReference product_reference,category_reference, discount_reference;
@@ -61,16 +63,18 @@ public class AddProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_products);
 
         //hooks
-        in_product_id = (TextInputLayout) findViewById(R.id.add_product_id);
-        in_product_name = (TextInputLayout) findViewById(R.id.add_product_name);
-        in_product_qty = (TextInputLayout) findViewById(R.id.add_product_qty);
-        in_product_price = (TextInputLayout) findViewById(R.id.add_product_price);
-        in_product_description = (TextInputLayout) findViewById(R.id.add_product_description);
-        in_product_category =(Spinner) findViewById(R.id.add_product_category);
-        in_product_discount =(Spinner) findViewById(R.id.add_product_discount);
-        in_product_img = (ImageView) findViewById(R.id.add_product_img);
-        finish = (Button) findViewById(R.id.add_product_btn);
-        progressBar = (ProgressBar) findViewById(R.id.add_product_progressbar);
+        back = findViewById(R.id.add_product_back);
+        back.setOnClickListener(view -> finish());
+        in_product_id = findViewById(R.id.add_product_id);
+        in_product_name = findViewById(R.id.add_product_name);
+        in_product_qty = findViewById(R.id.add_product_qty);
+        in_product_price = findViewById(R.id.add_product_price);
+        in_product_description = findViewById(R.id.add_product_description);
+        in_product_category = findViewById(R.id.add_product_category);
+        in_product_discount = findViewById(R.id.add_product_discount);
+        in_product_img = findViewById(R.id.add_product_img);
+        finish = findViewById(R.id.add_product_btn);
+        progressBar = findViewById(R.id.add_product_progressbar);
         
         product_reference = FirebaseDatabase.getInstance().getReference("products");
         product_img_reference = FirebaseStorage.getInstance().getReference("product images");

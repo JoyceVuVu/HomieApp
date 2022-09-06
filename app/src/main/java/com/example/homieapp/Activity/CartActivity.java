@@ -28,6 +28,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.timepicker.TimeFormat;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SimpleTimeZone;
 import java.util.UUID;
 
 public class CartActivity extends AppCompatActivity {
@@ -83,6 +85,7 @@ public class CartActivity extends AppCompatActivity {
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
         bill_reference = FirebaseDatabase.getInstance().getReference("bills");
         cartList.clear();
+        back.setOnClickListener(view -> finish());
 
     }
 
@@ -244,17 +247,20 @@ public class CartActivity extends AppCompatActivity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH:mm/");
-                String date = df.format(Calendar.getInstance().getTime());
+                DateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH:mm");
+//                String date = df.format(Calendar.getInstance().getTime());
+                String date = "2022/09/02/18:58";
+//                DateFormat time = new SimpleDateFormat("HH:mm/");
                 String randomID = UUID.randomUUID().toString().toUpperCase().substring(0,6);
-                String order_id = date +  "HD" + user_id + randomID ;
+                String order_id = "HD" + user_id + randomID ;
                 if (cartList.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Please choose your products ...", Toast.LENGTH_SHORT).show();
                 }else {
                     HashMap<String, Object> productMap = new HashMap<>();
                     productMap.put("productList", cartList);
                     productMap.put("order_id","HD" + user_id + randomID);
-                    productMap.put("totalPrice", total_price.getText());
+                    productMap.put("totalPrice", totalPrice);
+//                    bill_reference.child(date).child(order_id).updateChildren(productMap);
                     bill_reference.child(order_id).updateChildren(productMap);
                     user_reference.child(user_id).child("orders").child(order_id).updateChildren(productMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -262,7 +268,8 @@ public class CartActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
                                     intent.putExtra("order_id", order_id);
-                                    intent.putExtra("order_time", date);
+                                    intent.putExtra("order_date", date );
+//                                    intent.putExtra("order_time",time.format(Calendar.getInstance().getTime()));
                                     intent.putExtra("randomID", "HD" + user_id + randomID);
                                     startActivity(intent);
                                 }
@@ -271,5 +278,11 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

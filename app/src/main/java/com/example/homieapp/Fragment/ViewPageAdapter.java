@@ -23,8 +23,6 @@ public class ViewPageAdapter extends FragmentStateAdapter {
             case 2:
                 return new DiscountFragment();
 
-            case 3:
-                return new HistoryFragment();
             case 0:
 
             default:

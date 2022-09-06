@@ -2,10 +2,12 @@ package com.example.homieapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,6 +25,7 @@ import com.example.homieapp.Adapter.DiscountAdapter;
 import com.example.homieapp.Adapter.ProductAdapter;
 import com.example.homieapp.R;
 import com.example.homieapp.model.Discount;
+import com.example.homieapp.model.PaymentMethod;
 import com.example.homieapp.model.ProductCategory;
 import com.example.homieapp.model.Products;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -31,14 +34,18 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView productCatRecycler, proItemRecycler, discountRecycler;
-    ImageView toolbar_ava;
+    ShapeableImageView toolbar_ava;
     TextView cate_view_all, discount_view_all, product_view_all;
     SearchView enter_search;
     DrawerLayout drawerLayout;
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ProductAdapter productAdapter;
     DiscountAdapter discountAdapter;
     FloatingActionButton cart_fab;
+    String email;
 
 
     @Override
@@ -83,13 +91,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersDetails = sessionManager.getUserDetailFromSession();
+        String user_id = usersDetails.get(SessionManager.KEY_SESSIONPHONENO);
         String user_name  = usersDetails.get(SessionManager.KEY_USERNAME);
-        String email = usersDetails.get(SessionManager.KEY_EMAIL);
+        email = usersDetails.get(SessionManager.KEY_EMAIL);
         String image_url = usersDetails.get(SessionManager.KEY_IMAGE);
         headerUserName.setText(user_name);
         headerUserEmail.setText(email);
-        Picasso.with(this).load(image_url).into(toolbar_ava);
-        Picasso.with(this).load(image_url).into(headerAva);
+        Picasso.with(this).load(image_url).fit().centerCrop().into(toolbar_ava);
+        Picasso.with(this).load(image_url).fit().centerCrop().into(headerAva);
+        toolbar_ava.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), ProfileActivity.class)));
 
         //content main
         //Search();
@@ -105,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Category
         productCatRecycler = findViewById(R.id.home_cate_recycler);
         productCatRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        productCatRecycler.setItemAnimator(null);
         FirebaseRecyclerOptions<ProductCategory> options =
                 new FirebaseRecyclerOptions.Builder<ProductCategory>()
                         .setQuery(FirebaseDatabase.getInstance().getReference("categories"), ProductCategory.class)
@@ -116,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //products
         proItemRecycler = findViewById(R.id.home_product_recycler);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL,false);
+        proItemRecycler.setItemAnimator(null);
         proItemRecycler.setLayoutManager(layoutManager);
         FirebaseRecyclerOptions<Products> options1 =
                 new FirebaseRecyclerOptions.Builder<Products>()
@@ -128,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //discount
         discountRecycler = findViewById(R.id.home_discount_recycler);
         discountRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        discountRecycler.setItemAnimator(null);
         FirebaseRecyclerOptions<Discount> options2 =
                 new FirebaseRecyclerOptions.Builder<Discount>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("discounts"),Discount.class )
@@ -166,16 +179,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case  R.id.nav_cart:
                 startActivity(new Intent(this, CartActivity.class));
                 break;
-            case R.id.nav_chat:
-                startActivity(new Intent(this, AdminManagement.class));
+            case R.id.nav_layout:
+                if (email.equals("@admin.com")){
+                    item.setVisible(false);
+                    Toast.makeText(this, "You don't have permission", Toast.LENGTH_SHORT).show();
+                }else startActivity(new Intent(this, AdminManagement.class));
                 break;
             case R.id.nav_heart:
                 startActivity( new Intent(MainActivity.this, DashboardFavoriteProduct.class));
                 break;
-            case R.id.nav_help:
+            case R.id.nav_history:
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
             case R.id.nav_logout:
-                auth.signOut();
+                SessionManager sessionManager = new SessionManager(this, SessionManager.SESSION_USERSESSION);
+                sessionManager.logoutUserFromSession();
                 finish();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 break;
@@ -183,13 +201,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 break;
             case R.id.nav_promotion:
-                startActivity(new Intent(MainActivity.this, DiscountDetail.class));
+                startActivity(new Intent(MainActivity.this, DashboardDiscountActivity.class));
                 break;
             case R.id.nav_purchase:
+                startActivity(new Intent(MainActivity.this, PaymentActivity.class));
                 break;
             case R.id.nav_setting:
                 break;
             case R.id.nav_statics:
+                if (email.equals("@admin.com")){
+                    item.setVisible(false);
+                    Toast.makeText(this,"You don't have permission", Toast.LENGTH_SHORT).show();
+                }else startActivity((new Intent(MainActivity.this, Statistics.class)));
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

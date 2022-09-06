@@ -44,15 +44,17 @@
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_add_payment_method.xml" value="0.22" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_add_products.xml" value="0.22" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_admin_management.xml" value="0.33" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_bill_detail.xml" value="0.22" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_category_detail.xml" value="0.20416666666666666" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_choose_user_image.xml" value="0.12" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_history.xml" value="0.20416666666666666" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_profile.xml" value="0.18" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_profile.xml" value="0.2938388625592417" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_report.xml" value="0.20416666666666666" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_search.xml" value="0.25" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_statistics.xml" value="0.20416666666666666" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/bill_row.xml" value="0.5" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/activity_update_bill.xml" value="0.16" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/bill_row.xml" value="0.25" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/cart.xml" value="0.22" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/cart_row_item.xml" value="0.33" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/category_row_item.xml" value="0.3695652173913043" />
@@ -60,20 +62,22 @@
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/content_main_activity.xml" value="0.1" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/dashboard_activity.xml" value="0.18" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/discount_row_item.xml" value="0.22" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/editprofile_activity.xml" value="0.2" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/editprofile_activity.xml" value="0.21" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/feedback_row_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_add_product.xml" value="0.1" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_bill.xml" value="0.19010416666666666" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_bill.xml" value="0.18" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_category.xml" value="0.1" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_discount.xml" value="0.1" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_history.xml" value="0.1" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_hot_product.xml" value="0.20416666666666666" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_item.xml" value="0.25" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_sales.xml" value="0.33" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/fragment_sales.xml" value="0.16" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/header_side_menu.xml" value="0.25" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/login_activity.xml" value="0.25" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/main_activity.xml" value="0.1" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/order_row_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/order_row_item.xml" value="0.2" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/order_success.xml" value="0.1" />
-        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/payment_row_item.xml" value="0.3969571230982019" />
+        <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/payment_row_item.xml" value="0.25" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/products_details_activity.xml" value="0.22" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/products_row_item.xml" value="0.67" />
         <entry key="..\:/Graduation project/HomieApp/app/src/main/res/layout/reset_password.xml" value="0.20416666666666666" />

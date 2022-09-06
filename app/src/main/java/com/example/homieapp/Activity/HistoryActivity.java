@@ -13,14 +13,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.homieapp.Adapter.OrderBillAdapter;
 import com.example.homieapp.R;
 import com.example.homieapp.model.Order_bill;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -28,7 +34,8 @@ public class HistoryActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference bill_reference;
     String user_id;
-    FirebaseRecyclerAdapter<Order_bill, OrderBillViewHolder> adapter;
+    OrderBillAdapter adapter;
+    List<Order_bill> order_billList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,42 +49,28 @@ public class HistoryActivity extends AppCompatActivity {
         user_id = userDetails.get(SessionManager.KEY_SESSIONPHONENO);
 
         bill_reference = FirebaseDatabase.getInstance().getReference("users").child(user_id).child("orders");
-        FirebaseRecyclerOptions<Order_bill> options = new FirebaseRecyclerOptions.Builder<Order_bill>()
-                .setQuery(bill_reference, Order_bill.class)
-                .build();
-         adapter = new FirebaseRecyclerAdapter<Order_bill, OrderBillViewHolder>(options) {
+        bill_reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull OrderBillViewHolder holder, int position, @NonNull Order_bill model) {
-                holder.bill_date.setText(model.getDate());
-                holder.bill_id.setText(model.getId());
-                holder.bill_totalPrice.setText(model.getTotal_price());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                order_billList.clear();
+                for (DataSnapshot ds: snapshot.getChildren()) {
+                    Order_bill order_bill = ds.getValue(Order_bill.class);
+                    order_billList.add(order_bill);
+                    adapter = new OrderBillAdapter(order_billList, getApplicationContext());
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
             }
 
-            @NonNull
             @Override
-            public OrderBillViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new OrderBillViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_row, parent, false));
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
-        };
-        recyclerView.setAdapter(adapter);
+        });
+        back.setOnClickListener(view -> startActivity(new Intent(HistoryActivity.this, MainActivity.class)));
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    private class OrderBillViewHolder extends RecyclerView.ViewHolder {
-        TextView bill_date, bill_id, bill_totalPrice;
-        public OrderBillViewHolder(@NonNull View itemView) {
-            super(itemView);
-            bill_date = itemView.findViewById(R.id.bill_date);
-            bill_id = itemView.findViewById(R.id.bill_id);
-            bill_totalPrice = itemView.findViewById(R.id.bill_totalPrice);
-        }
-    }
 
     @Override
     public void onBackPressed() {

@@ -48,7 +48,7 @@ public class ProductsDetails extends AppCompatActivity {
 
         prod_id = getIntent().getStringExtra("ID");
         fromPage = getIntent().getStringExtra("fromPage");
-        Log.d("fromPage", fromPage);
+//        Log.d("fromPage", fromPage);
         back = findViewById(R.id.product_detail_back);
         cart = findViewById(R.id.product_detail_cart);
         plus = findViewById(R.id.plus_btn);
@@ -109,17 +109,17 @@ public class ProductsDetails extends AppCompatActivity {
         String user_id = usersDetails.get(SessionManager.KEY_SESSIONPHONENO);
 
         //Check whether product is exist or not
-        Query query = user_reference.child(user_id).child("carts").orderByChild(prod_id).equalTo(prod_id);
+        Query query = user_reference.child(user_id).child("carts").child(prod_id);//.orderByChild(prod_id).equalTo(prod_id);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    String quantity_orderFromDB = snapshot.child(prod_id).child("numberInCart").getValue(String.class);
+                    String quantity_orderFromDB = snapshot.child("numberInCart").getValue(String.class);
                     int total_quantity =Integer.parseInt(quantity_orderFromDB) + Integer.parseInt(numberInCart);
                     if (total_quantity > product_quantity){
                         Toast.makeText(getApplicationContext(), "The amount you choose has reached a maximum of this product\n", Toast.LENGTH_SHORT).show();
                     }else {
-                        snapshot.child(prod_id).child("numberInCart").getRef().setValue(String.valueOf(total_quantity))
+                        snapshot.child("numberInCart").getRef().setValue(String.valueOf(total_quantity))
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -211,7 +211,7 @@ public class ProductsDetails extends AppCompatActivity {
     public void Back(){
         if (fromPage == "com.example.homieapp.Activity.MainActivity@cb21aa"){
             startActivity(new Intent(ProductsDetails.this, MainActivity.class));
-        }else if (fromPage == "com.example.homieapp.Activity.DashboảdProduct@cb21aa"){
+        }else if (fromPage == "com.example.homieapp.Activity.DashboardProduct@cb21aa"){
             startActivity((new Intent(ProductsDetails.this, DashboardProduct.class)));
         }else {
             finish();

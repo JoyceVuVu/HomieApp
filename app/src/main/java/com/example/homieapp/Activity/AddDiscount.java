@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public class AddDiscount extends AppCompatActivity {
     private ImageView in_discount_img;
     private Button in_discount_btn;
     private ProgressBar progressBar;
+    private ImageButton back;
     private Uri uri;
     private DatabaseReference discount_reference;
     private StorageReference discount_img_reference;
@@ -46,13 +48,15 @@ public class AddDiscount extends AppCompatActivity {
         setContentView(R.layout.activity_add_discount);
 
         //hooks
-        in_discount_id = (TextInputLayout) findViewById(R.id.add_discount_id);
-        in_discount_name = (TextInputLayout) findViewById(R.id.add_discount_name);
-        in_discount_percent = (TextInputLayout) findViewById(R.id.add_discount_percent);
-        in_discount_description = (TextInputLayout) findViewById(R.id.add_discount_description);
-        in_discount_img = (ImageView) findViewById(R.id.add_discount_img);
-        in_discount_btn = (Button) findViewById(R.id.add_discount_btn);
-        progressBar = (ProgressBar) findViewById(R.id.add_discount_progressbar);
+        back = findViewById(R.id.add_discount_back);
+        back.setOnClickListener(view -> finish());
+        in_discount_id = findViewById(R.id.add_discount_id);
+        in_discount_name = findViewById(R.id.add_discount_name);
+        in_discount_percent = findViewById(R.id.add_discount_percent);
+        in_discount_description = findViewById(R.id.add_discount_description);
+        in_discount_img = findViewById(R.id.add_discount_img);
+        in_discount_btn = findViewById(R.id.add_discount_btn);
+        progressBar = findViewById(R.id.add_discount_progressbar);
 
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
         discount_img_reference = FirebaseStorage.getInstance().getReference("discount images");

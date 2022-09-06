@@ -52,14 +52,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
         //Hooks
-        logo = (ImageView) findViewById(R.id.login_logo);
-        in_phone_no = (TextInputLayout) findViewById(R.id.login_phone_no);
-        in_password = (TextInputLayout) findViewById(R.id.login_password);
-        signin_btn = (Button) findViewById(R.id.btnSignin);
-        sign_up = (TextView) findViewById(R.id.txtSignup);
-        forget_password = (TextView) findViewById(R.id.resetpass);
-        progressBar = (ProgressBar) findViewById(R.id.login_progress_bar);
-        remember_me = (CheckBox) findViewById(R.id.login_remember_me);
+        logo = findViewById(R.id.login_logo);
+        in_phone_no = findViewById(R.id.login_phone_no);
+        in_password = findViewById(R.id.login_password);
+        signin_btn = findViewById(R.id.btnSignin);
+        sign_up = findViewById(R.id.txtSignup);
+        forget_password = findViewById(R.id.resetpass);
+        progressBar = findViewById(R.id.login_progress_bar);
+        remember_me = findViewById(R.id.login_remember_me);
         phone_no_editText = findViewById(R.id.login_phone_no_editText);
         password_editText = findViewById(R.id.login_password_editText);
         //check whether phone number and password is already saved in Shared preferences or not
@@ -165,8 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                         String emailFromDB = dataSnapshot.child(finalPhone_no).child("email").getValue(String.class);
                         String addressFromDB = dataSnapshot.child(finalPhone_no).child("address").getValue(String.class);
                         String imageFromDB = dataSnapshot.child(finalPhone_no).child("image").getValue(String.class);
-                        String adminFromDB = String.valueOf(dataSnapshot.child(finalPhone_no).child("admin").getValue(Boolean.class));
-                        Log.d("phone_no: ", phoneNoFromDB );
+                        String adminFromDB = dataSnapshot.child(finalPhone_no).child("admin").getValue(String.class);
                         SessionManager sessionManager = new SessionManager(LoginActivity.this, SessionManager.SESSION_USERSESSION);
                         sessionManager.createLoginSession(full_nameFromDB, usernameFromDB, emailFromDB, phoneNoFromDB, passwordFromDB, addressFromDB, imageFromDB, adminFromDB);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));

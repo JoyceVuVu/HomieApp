@@ -66,12 +66,12 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
         SessionManager sessionManager = new SessionManager(holder.itemView.getContext(),SessionManager.SESSION_USERSESSION);
         HashMap<String, String> usersDetails = sessionManager.getUserDetailFromSession();
         String user_id = usersDetails.get(SessionManager.KEY_SESSIONPHONENO);
-
         product_favourite_reference.child(user_id).child("favourite").orderByChild("id").equalTo(model.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 isFavourite = snapshot.exists();
                 if (isFavourite){
+
                     holder.heart.setButtonDrawable(R.drawable.ic_heart_filled);
                 }else {
                     holder.heart.setButtonDrawable(R.drawable.ic_heart);
@@ -83,6 +83,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
 
             }
         });
+
         holder.heart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +107,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Products, ProductAda
                 }
             }
         });
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

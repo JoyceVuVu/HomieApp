@@ -66,5 +66,10 @@
     <string name="add_to_cart">ADD TO CART</string>
     <string name="admin_management">Admin Management</string>
     <string name="check_out">Check out</string>
+    <string-array name="status">
+        <item>Confirmed</item>
+        <item>Shipping</item>
+        <item>Done</item>
+    </string-array>
 
 </resources>

@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/custom_button_colored"
+    android:elevation="4dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/payment_row_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Cash"
+            android:textSize="18sp"
+            android:layout_weight="@integer/material_motion_duration_long_1"/>
+        <ImageView
+            android:id="@+id/payment_row_item_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit_1"/>
+    </LinearLayout>
+    <TextView
+    android:id="@+id/payment_row_item_account"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:id="@+id/payment_method_item_radio_btn"
+    android:fontFamily="@font/montserrat"
     android:text="Cash"
     android:textSize="16sp"
-    android:fontFamily="@font/montserrat"
-    android:background="@color/background_gray"/>
+    android:layout_weight="1"/>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

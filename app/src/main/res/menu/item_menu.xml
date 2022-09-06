@@ -17,9 +17,9 @@
         android:title="@string/promotion"
         android:icon="@drawable/ic_promotion"/>
 
-    <item android:id="@+id/nav_chat"
+    <item android:id="@+id/nav_layout"
         android:title="@string/admin_management"
-        android:icon="@drawable/ic_chatting_3"/>
+        android:icon="@drawable/ic_layout_1"/>
 
     <item android:id="@+id/nav_purchase"
         android:title="@string/purchase"
@@ -30,9 +30,9 @@
         android:icon="@drawable/ic_stats_2"/>
 
     <item
-        android:id="@+id/nav_help"
-        android:title="@string/support"
-        android:icon="@drawable/ic_help"/>
+        android:id="@+id/nav_history"
+        android:title="History"
+        android:icon="@drawable/ic_alarm"/>
 
 
     <item android:id="@+id/nav_profile"

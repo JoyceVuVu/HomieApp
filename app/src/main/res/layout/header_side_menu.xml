@@ -62,12 +62,12 @@
             android:text="@string/profile_email"
             android:textColor="@color/white"
             android:textSize="16sp" />
-
-        <View
+        <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="40dp"
-            android:background="@color/white" />
+            android:layout_height="wrap_content"
+            app:dividerThickness = "1dp"
+            app:dividerColor = "@color/purple_200"
+            style="@style/Widget.Material3.MaterialDivider"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.homieapp.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,15 +55,9 @@ public class DiscountFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_discount, container, false);
         recyclerView = root.findViewById(R.id.discount_fragment_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
-        registerForContextMenu(recyclerView);
 
         actionButton = root.findViewById(R.id.discount_fragment_fab);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddDiscount.class));
-            }
-        });
+        actionButton.setOnClickListener(view -> startActivity(new Intent(getContext(), AddDiscount.class)));
         discount_reference = FirebaseDatabase.getInstance().getReference("discounts");
         FirebaseRecyclerOptions<Discount> options = new FirebaseRecyclerOptions.Builder<Discount>()
                 .setQuery(discount_reference, Discount.class)
@@ -72,10 +69,39 @@ public class DiscountFragment extends Fragment {
                         holder.id.setText(model.getId());
                         holder.percent.setText(model.getPercent());
                         id = model.getId();
-                        holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+                        holder.more.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                                getActivity().getMenuInflater().inflate(R.menu.context_menu, contextMenu);
+                            public void onClick(View view) {
+                                PopupMenu menu = new PopupMenu(getContext(), holder.more);
+                                menu.inflate(R.menu.bottom_navbar);
+                                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem menuItem) {
+                                        switch (menuItem.getItemId()){
+                                            case R.id.update:
+                                                Intent intent = new Intent(getContext(), EditDiscount.class);
+                                                intent.putExtra("ID", model.getId());
+                                                holder.itemView.getContext().startActivity(intent);
+                                                return true;
+                                            case R.id.delete:
+                                                discount_reference.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        snapshot.getRef().removeValue();
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                    }
+                                                });
+                                                return true;
+                                            default:
+                                                return false;
+                                        }
+                                    }
+                                });
+                                menu.show();
                             }
                         });
 
@@ -94,47 +120,14 @@ public class DiscountFragment extends Fragment {
 
     private class DiscountFragmentViewHolder extends RecyclerView.ViewHolder {
         TextView id, percent;
+        ImageView more;
         public DiscountFragmentViewHolder(@NonNull View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.fragment_discount_id);
             percent = itemView.findViewById(R.id.fragment_discount_percent);
+            more = itemView.findViewById(R.id.fragment_item_more);
         }
     }
 
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_view:
-                Intent intent = new Intent(getContext(), DiscountDetail.class);
-                intent.putExtra("ID", id);
-                startActivity(intent);
-                return true;
-            case R.id.menu_add:
-                Intent intent1 = new Intent(getContext(), AddDiscount.class);
-                intent1.putExtra("ID", id);
-                startActivity(intent1);
-                return true;
-            case R.id.menu_update:
-                Intent intent3 = new Intent(getContext(), EditDiscount.class);
-                intent3.putExtra("ID", id);
-                startActivity(intent3);
-                return true;
-            case R.id.menu_delete:
-                discount_reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        snapshot.getRef().removeValue();
-                        Toast.makeText(getContext(), "This item is deleted", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
 }

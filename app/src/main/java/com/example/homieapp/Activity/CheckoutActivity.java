@@ -49,10 +49,9 @@ public class CheckoutActivity extends AppCompatActivity {
     DatabaseReference order_reference, payment_reference, discount_reference, cart_reference, product_reference, bill_reference;
     String _order_id,randomID;
     String username, phone_no, address;
-//    PaymentAdapter paymentAdapter;
     OrderAdapter orderAdapter;
     public static List<Cart> cartListItem = new ArrayList<>();
-    String order_time, payment;
+    String order_time, _order_date;
     List<Cart> list = new ArrayList<>();
     List<Products> productsList = new ArrayList<>();
 
@@ -93,7 +92,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
         _order_id = getIntent().getStringExtra("order_id");
         randomID = getIntent().getStringExtra("randomID");
-        order_time = getIntent().getStringExtra("order_time");
+//        order_time = getIntent().getStringExtra("order_time");
+        _order_date = getIntent().getStringExtra("order_date");
 //         _order_id = "2022/09/05/08:03/HD96564516060C03D";
 //        String randomID = "HD96564516060C03D";
 //        order_time = "2022/09/05/08:03";
@@ -118,7 +118,7 @@ public class CheckoutActivity extends AppCompatActivity {
         payment_reference = FirebaseDatabase.getInstance().getReference("users").child(phone_no).child("payment_method");
         setSpinnerDataFromDB(payment_reference, this, payment_spinner);
         order_id.setText(randomID);
-        order_date.setText(order_time);
+        order_date.setText(_order_date );
         order_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -179,11 +179,12 @@ public class CheckoutActivity extends AppCompatActivity {
         HashMap<String, Object> orderMap = new HashMap<>();
         orderMap.put("user_id", phone_no);
         orderMap.put("username", username);
-        orderMap.put("date", order_time);
+        orderMap.put("date", _order_date );
         orderMap.put("phoneNumber", userphone);
         orderMap.put("address", address);
-        orderMap.put("Confirmed", address);
+        orderMap.put("status", "Confirmed");
         orderMap.put("payment_method", payment);
+//        bill_reference.child(_order_date).child(_order_id).updateChildren(orderMap);
         bill_reference.child(_order_id).updateChildren(orderMap);
         order_reference.updateChildren(orderMap);
         order_reference.child("productList").addValueEventListener(new ValueEventListener() {
@@ -198,6 +199,9 @@ public class CheckoutActivity extends AppCompatActivity {
                     String numberInCart = list.get(i).getNumberInCart();
                     String quantity = list.get(i).getProducts().getQuantity();
                     String updateQuantity= String.valueOf(Integer.parseInt(quantity) - Integer.parseInt(numberInCart));
+                    if (Integer.parseInt(updateQuantity) <= 0){
+                        updateQuantity = "Hết hàng";
+                    }
                     HashMap<String , Object> updateProduct = new HashMap<>();
                     updateProduct.put("quantity", updateQuantity);
                     product_reference.child(list.get(i).getProducts().getId()).updateChildren(updateProduct).addOnCompleteListener(new OnCompleteListener<Void>() {

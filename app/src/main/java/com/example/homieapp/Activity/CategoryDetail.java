@@ -91,4 +91,10 @@ public class CategoryDetail extends AppCompatActivity {
         super.onStop();
         productAdapter.startListening();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(CategoryDetail.this, MainActivity.class));
+    }
 }

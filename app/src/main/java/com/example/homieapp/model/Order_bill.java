@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order_bill {
-    String id;
+    String order_id;
     String user_id;
     String username;
     String date;
@@ -12,7 +12,7 @@ public class Order_bill {
     String address;
     String status;
     String payment_method;
-    String total_price;
+    String totalPrice;
     List<Products> productsList;
 
     public Order_bill() {
@@ -37,7 +37,7 @@ public class Order_bill {
     }
 
     public Order_bill(String id, String user_id,String username, String date, String phone_no, String address, String status, String payment_method, String total_price, ArrayList<Products> productsList) {
-        this.id = id;
+        this.order_id = id;
         this.user_id = user_id;
         this.username = username;
         this.date = date;
@@ -45,16 +45,24 @@ public class Order_bill {
         this.address = address;
         this.status = status;
         this.payment_method = payment_method;
-        this.total_price = total_price;
+        this.totalPrice = total_price;
         this.productsList = productsList;
     }
 
-    public String getId() {
-        return id;
+    public String getOrder_id() {
+        return order_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
     public String getUser_id() {
@@ -73,13 +81,6 @@ public class Order_bill {
         this.date = date;
     }
 
-    public String getPhone_no() {
-        return phoneNumber;
-    }
-
-    public void setPhone_no(String phone_no) {
-        this.phoneNumber = phone_no;
-    }
 
     public String getAddress() {
         return address;
@@ -105,13 +106,14 @@ public class Order_bill {
         this.payment_method = payment_method;
     }
 
-    public String getTotal_price() {
-        return total_price;
+    public String getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotal_price(String total_price) {
-        this.total_price = total_price;
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
     }
+
 
     public List<Products> getProductsList() {
         return productsList;

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.BillDetail"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/order_bill_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"/>
+        <TextView
+            android:id="@+id/order_bill_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:text="Order_id"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shipping to"
+            android:textSize="18sp"
+            android:fontFamily="@font/montserrat"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/order_status"
+            android:textSize="12sp"
+            android:fontFamily="@font/montserrat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:backgroundTint="@color/purple_500"
+            style="@style/Widget.Material3.Button"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/order_bill_address"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:inputType="textMultiLine"
+        android:fontFamily="@font/montserrat"
+        android:textSize="16sp"
+        android:background="@drawable/cart_details_bgr"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"/>
+    <TextView
+        android:layout_marginTop="16sp"
+        android:text = "items"
+        android:fontFamily="@font/montserrat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/order_bill_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="24sp"
+        android:fontFamily="@font/montserrat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment method:"/>
+    <TextView
+        android:background="@drawable/profile_textview"
+        android:id="@+id/order_bill_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:fontFamily="@font/montserrat"
+        android:textSize="16sp"
+        android:text="Payment: "/>
+    <TextView
+        android:layout_marginTop="8sp"
+        android:id="@+id/order_bill_totalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:fontFamily="@font/montserrat"
+        android:text="Total: "
+        android:textAlignment="center"/>
+
+</LinearLayout>
